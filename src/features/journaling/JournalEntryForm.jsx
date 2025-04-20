@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { 
@@ -15,6 +15,8 @@ import {
   selectError
 } from './journalingSlice';
 import JournalTagInput from './JournalTagInput';
+import RichTextEditor from './RichTextEditor';
+import MoodSelector from './MoodSelector';
 
 const JournalEntryForm = () => {
   const dispatch = useDispatch();
@@ -108,18 +110,10 @@ const JournalEntryForm = () => {
     }
   };
   
-  // Available mood options
-  const moodOptions = [
-    { value: '', label: 'Select Mood (Optional)' },
-    { value: 'Happy', label: 'Happy' },
-    { value: 'Calm', label: 'Calm' },
-    { value: 'Anxious', label: 'Anxious' },
-    { value: 'Reflective', label: 'Reflective' },
-    { value: 'Inspired', label: 'Inspired' },
-    { value: 'Melancholic', label: 'Melancholic' },
-    { value: 'Confused', label: 'Confused' },
-    { value: 'Grateful', label: 'Grateful' },
-  ];
+  // Handle mood change
+  const handleMoodChange = (mood) => {
+    dispatch(updateFormData({ mood }));
+  };
   
   // Mock reading options - in a real implementation, you would fetch the user's readings
   const readingOptions = [
@@ -162,22 +156,16 @@ const JournalEntryForm = () => {
           
           {/* Mood selector */}
           <div className="mb-4">
-            <label htmlFor="mood" className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Mood
             </label>
-            <select
-              id="mood"
-              name="mood"
-              value={formData.mood}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-            >
-              {moodOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <MoodSelector 
+              selectedMood={formData.mood}
+              onChange={handleMoodChange}
+            />
+            <p className="mt-1 text-sm text-gray-500">
+              Select a mood that represents how you feel
+            </p>
           </div>
           
           {/* Tag input */}
@@ -217,21 +205,16 @@ const JournalEntryForm = () => {
             </p>
           </div>
           
-          {/* Content textarea - will be replaced with rich text editor in future */}
-          <div className="mb-6">
+          {/* Rich text editor for content */}
+          <div className="mb-6 relative">
             <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
               Journal Content
             </label>
-            <textarea
-              id="content"
-              name="content"
+            <RichTextEditor
               value={formData.content}
-              onChange={handleInputChange}
+              onChange={(newContent) => dispatch(updateFormData({ content: newContent }))}
               placeholder="Write your journal entry here..."
-              rows={10}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-              required
-            ></textarea>
+            />
           </div>
           
           {/* Form actions */}

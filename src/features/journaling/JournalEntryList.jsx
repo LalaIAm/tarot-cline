@@ -1,6 +1,35 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+
+// Helper functions for mood display
+const getMoodEmoji = (mood) => {
+  switch (mood) {
+    case 'Happy': return '😄';
+    case 'Calm': return '😌';
+    case 'Anxious': return '😰';
+    case 'Reflective': return '🤔';
+    case 'Inspired': return '✨';
+    case 'Melancholic': return '😔';
+    case 'Confused': return '😕';
+    case 'Grateful': return '🙏';
+    default: return '';
+  }
+};
+
+const getMoodStyles = (mood) => {
+  switch (mood) {
+    case 'Happy': return 'bg-yellow-100 text-yellow-800';
+    case 'Calm': return 'bg-blue-100 text-blue-800';
+    case 'Anxious': return 'bg-orange-100 text-orange-800';
+    case 'Reflective': return 'bg-purple-100 text-purple-800';
+    case 'Inspired': return 'bg-pink-100 text-pink-800';
+    case 'Melancholic': return 'bg-indigo-100 text-indigo-800';
+    case 'Confused': return 'bg-cyan-100 text-cyan-800';
+    case 'Grateful': return 'bg-green-100 text-green-800';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+};
 
 const JournalEntryList = ({ 
   entries, 
@@ -33,10 +62,15 @@ const JournalEntryList = ({
     );
   }
 
-  // Function to truncate content for preview
+  // Function to truncate content for preview and strip HTML tags
   const truncateContent = (content, maxLength = 150) => {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
+    // Create a temporary div to parse HTML content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    
+    if (textContent.length <= maxLength) return textContent;
+    return textContent.substring(0, maxLength) + '...';
   };
 
   // Function to format date
@@ -62,8 +96,8 @@ const JournalEntryList = ({
                 <h3 className="text-xl font-semibold text-gray-800 mb-2 line-clamp-1">{entry.title}</h3>
                 
                 {entry.mood && (
-                  <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-                    {entry.mood}
+                  <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-semibold ${getMoodStyles(entry.mood)}`}>
+                    {getMoodEmoji(entry.mood)} {entry.mood}
                   </span>
                 )}
               </div>

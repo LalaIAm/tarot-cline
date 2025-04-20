@@ -4,6 +4,35 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchJournal, deleteJournalEntry, selectCurrentJournal, selectIsFetching, selectIsDeleting, selectError } from './journalingSlice';
 import { format } from 'date-fns';
 
+// Helper functions for mood display
+const getMoodEmoji = (mood) => {
+  switch (mood) {
+    case 'Happy': return '😄';
+    case 'Calm': return '😌';
+    case 'Anxious': return '😰';
+    case 'Reflective': return '🤔';
+    case 'Inspired': return '✨';
+    case 'Melancholic': return '😔';
+    case 'Confused': return '😕';
+    case 'Grateful': return '🙏';
+    default: return '';
+  }
+};
+
+const getMoodStyles = (mood) => {
+  switch (mood) {
+    case 'Happy': return 'bg-yellow-100 text-yellow-800';
+    case 'Calm': return 'bg-blue-100 text-blue-800';
+    case 'Anxious': return 'bg-orange-100 text-orange-800';
+    case 'Reflective': return 'bg-purple-100 text-purple-800';
+    case 'Inspired': return 'bg-pink-100 text-pink-800';
+    case 'Melancholic': return 'bg-indigo-100 text-indigo-800';
+    case 'Confused': return 'bg-cyan-100 text-cyan-800';
+    case 'Grateful': return 'bg-green-100 text-green-800';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+};
+
 const JournalEntryDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -117,8 +146,11 @@ const JournalEntryDetail = () => {
             )}
             
             {journal.mood && (
-              <div>
-                <span className="font-semibold">Mood:</span> {journal.mood}
+              <div className="flex items-center">
+                <span className="font-semibold mr-1">Mood:</span> 
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm ${getMoodStyles(journal.mood)}`}>
+                  {getMoodEmoji(journal.mood)} {journal.mood}
+                </span>
               </div>
             )}
             
@@ -147,14 +179,11 @@ const JournalEntryDetail = () => {
           )}
         </div>
         
-        {/* Journal content */}
-        <div className="prose prose-lg max-w-none">
-          {/* For now, we're just displaying the content as plain text. 
-              Later, this will handle rich text formatting */}
-          {journal.content.split('\n').map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
+        {/* Journal content - renders HTML safely */}
+        <div 
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: journal.content }} 
+        />
         
         {/* Back link */}
         <div className="mt-8 pt-4 border-t border-gray-200">
