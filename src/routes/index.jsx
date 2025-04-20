@@ -10,6 +10,9 @@ const AuthPage = () => <div>Authentication Page</div>;
 const DashboardPage = () => <div>Dashboard Page</div>;
 const NotFoundPage = () => <div>404 - Page Not Found</div>;
 
+// Demo Components
+import ButtonDemo from '../components/ButtonDemo';
+
 // Create router
 export const router = createBrowserRouter([
   {
@@ -28,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: 'button-demo',
+        element: <ButtonDemo />,
       },
     ],
   },
