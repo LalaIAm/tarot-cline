@@ -1,7 +1,7 @@
 # Active Context: TarotLyfe
 
 ## Current Focus
-The project has completed the initialization phase and is now ready to begin Milestone 1 feature implementation. The basic project structure, state management, routing, and styling foundation have been established. The current focus is on implementing the core features of Milestone 1: Landing Page, Authentication, and Core Navigation.
+The project has completed the initialization phase and is now ready to begin Milestone 1 feature implementation. The basic project structure, state management, routing, and styling foundation have been established. The current focus is on implementing the core features of Milestone 1: Landing Page, Authentication with Supabase, and Core Navigation. A detailed implementation plan for Milestone 1 has been created and documented in `memory-bank/milestone1-plan.md`.
 
 ## Recent Changes
 - Completed project setup:
@@ -17,7 +17,8 @@ The project has completed the initialization phase and is now ready to begin Mil
 ## Next Steps
 1. **Milestone 1 Implementation**
    - Develop landing page with CTA (Call to Action)
-   - Implement authentication integration with Clerk
+   - Implement authentication integration with Supabase
+   - Create Supabase database with proper Row Level Security
    - Create core navigation and protected routes
    - Build dashboard page scaffolding
 
@@ -51,7 +52,7 @@ The project has completed the initialization phase and is now ready to begin Mil
 - Specific AI API provider for tarot card interpretations
 - Deployment platform selection
 - Testing strategy implementation details
-- Authentication flow implementation details with Clerk
+- Authentication flow implementation details with Supabase
 - Initial landing page messaging and visual design approach
 
 ## Important Patterns & Preferences
@@ -87,5 +88,6 @@ Initial insights from planning and implementation include:
 - The value of SCSS for creating a maintainable styling system
 - The benefit of setting up a proper project structure early on
 - The importance of addressing technical debt (SCSS deprecation warnings) early
+- The advantages of using Supabase for authentication and database needs, providing built-in security with Row Level Security (RLS) and real-time capabilities
 
 This active context document will be regularly updated as the project evolves, with particular attention to current focus, recent changes, and next steps to ensure continuity between development sessions.

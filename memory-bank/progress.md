@@ -13,16 +13,19 @@
 - ✅ Project setup and repository initialization completed
 - ✅ Development environment configuration completed
 - ✅ Project structure and organization established
+- ✅ Detailed implementation plan for Milestone 1 created
 
 ## What's In Progress
 - 🔄 Preparation for Milestone 1 implementation
 - 🔄 Planning landing page design and components
-- 🔄 Authentication flow design
+- 🔄 Authentication flow design with Supabase
+- 🔄 Supabase database schema design
 
 ## What's Left To Build
 1. **Milestone 1: Landing Page, Authentication, and Core Navigation**
    - [ ] Landing Page design and implementation
-   - [ ] Authentication integration with Clerk
+   - [ ] Authentication integration with Supabase
+   - [ ] Supabase database setup with RLS policies
    - [ ] Core navigation and routing
    - [ ] Dashboard page scaffolding
 
@@ -79,13 +82,16 @@ The project has completed the initialization phase. We have set up the React pro
 - Defined feature-based code organization approach
 - Committed to React with Redux Toolkit for frontend
 - Selected Node.js and PostgreSQL for backend technology
+- Decided to use Supabase for authentication and database
 - Created basic project structure with all required dependencies
 - Implemented SCSS with a component-based approach
+- Created detailed implementation plan for Milestone 1
 
 ## Next Actions
-1. Begin implementation of Milestone 1 features:
+1. Begin implementation of Milestone 1 features according to the plan:
    - Create landing page design and components
-   - Implement authentication with Clerk
+   - Implement authentication with Supabase
+   - Set up Supabase database with Row Level Security
    - Set up core navigation and protected routes
 2. Refactor SCSS to address deprecation warnings
 3. Create shared UI components for consistent design

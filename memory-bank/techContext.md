@@ -13,11 +13,12 @@
 ### Backend
 - **Server**: Node.js
 - **API Design**: RESTful API endpoints
-- **Database**: PostgreSQL for relational data storage
-- **Authentication**: Clerk for user authentication and session management
+- **Database**: PostgreSQL for relational data storage (through Supabase)
+- **Authentication**: Supabase for user authentication and session management
 
 ### Third-Party Services
 - **AI Integration**: External API for tarot card interpretations
+- **Supabase**: Backend-as-a-Service for authentication, database, and real-time capabilities
 - **Hosting/Deployment**: TBD (likely Vercel, Netlify, or AWS)
 
 ## Development Environment
@@ -42,8 +43,9 @@
 VITE_API_URL=http://localhost:8000
 VITE_API_KEY=your_api_key
 
-# Authentication 
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+# Supabase Authentication 
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # Other services
 VITE_AI_INTERPRETATION_API_KEY=your_ai_api_key
@@ -85,7 +87,7 @@ The project is built using Vite as the build tool. Current primary dependencies 
     "react-router-dom": "latest",
     "sass": "latest",
     "axios": "latest",
-    "@clerk/clerk-react": "latest"
+    "@supabase/supabase-js": "latest"
   },
   "devDependencies": {
     "vite": "latest",
@@ -107,7 +109,7 @@ The project is built using Vite as the build tool. Current primary dependencies 
     "pg": "^8.9.0",
     "knex": "^2.4.2",
     "jsonwebtoken": "^9.0.0",
-    "@clerk/clerk-sdk-node": "^4.8.0",
+    "@supabase/supabase-js": "latest",
     "winston": "^3.8.2"
   },
   "devDependencies": {
