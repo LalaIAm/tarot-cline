@@ -136,3 +136,87 @@ export const setupAuthListener = (callback) => {
   
   return data.subscription; // Return subscription for cleanup
 };
+
+/**
+ * Tarot Reading Services
+ */
+
+// Save a reading to the database
+export const saveReading = async (readingData) => {
+  try {
+    const { data: user } = await supabase.auth.getUser();
+    if (!user.user) throw new Error('User not authenticated');
+    
+    const { data, error } = await supabase
+      .from('readings')
+      .insert({
+        user_id: user.user.id,
+        question: readingData.question,
+        spread_type: readingData.spread.id,
+        reading_data: readingData.cards,
+        interpretation: readingData.interpretation
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { data, error: null };
+  } catch (error) {
+    console.error('Error saving reading:', error.message);
+    return { data: null, error };
+  }
+};
+
+// Get a reading by ID
+export const getReadingById = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from('readings')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return { reading: data, error: null };
+  } catch (error) {
+    console.error('Error fetching reading:', error.message);
+    return { reading: null, error };
+  }
+};
+
+// Get all readings for the current user
+export const getUserReadings = async (limit = 10, page = 0) => {
+  try {
+    const { data: user } = await supabase.auth.getUser();
+    if (!user.user) throw new Error('User not authenticated');
+    
+    const { data, error, count } = await supabase
+      .from('readings')
+      .select('*', { count: 'exact' })
+      .eq('user_id', user.user.id)
+      .order('created_at', { ascending: false })
+      .range(page * limit, (page + 1) * limit - 1);
+
+    if (error) throw error;
+    return { readings: data, count, error: null };
+  } catch (error) {
+    console.error('Error fetching user readings:', error.message);
+    return { readings: [], count: 0, error };
+  }
+};
+
+// Delete a reading
+export const deleteReading = async (id) => {
+  try {
+    const { error } = await supabase
+      .from('readings')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+    return { error: null };
+  } catch (error) {
+    console.error('Error deleting reading:', error.message);
+    return { error };
+  }
+};

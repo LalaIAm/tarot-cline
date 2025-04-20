@@ -12,6 +12,8 @@ import LandingPage from '../features/landing/LandingPage';
 import Dashboard from '../features/dashboard/Dashboard';
 import NotFoundPage from '../components/shared/NotFoundPage';
 import TarotReadingPage from '../features/tarotReading/TarotReadingPage';
+import ReadingHistory from '../features/tarotReading/ReadingHistory';
+import ReadingInterpretation from '../features/tarotReading/ReadingInterpretation';
 
 // Create router
 export const router = createBrowserRouter([
@@ -41,6 +43,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <TarotReadingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'tarot/history',
+        element: (
+          <ProtectedRoute>
+            <ReadingHistory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'tarot/reading/:id',
+        element: (
+          <ProtectedRoute>
+            <ReadingInterpretation />
           </ProtectedRoute>
         ),
       },
