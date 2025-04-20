@@ -1,12 +1,44 @@
-import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { store } from './app/store';
 import { router } from './routes/index';
+import { setUser } from './features/authentication/authSlice';
+import { setupAuthListener } from './services/supabaseService';
+
+// Auth state listener component
+const AuthProvider = ({ children }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Setup Supabase auth listener to update Redux state when auth changes
+    const subscription = setupAuthListener((event, session) => {
+      console.log('Supabase auth event:', event);
+      
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        dispatch(setUser(session?.user || null));
+      } else if (event === 'SIGNED_OUT') {
+        dispatch(setUser(null));
+      }
+    });
+
+    // Clean up subscription on unmount
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, [dispatch]);
+
+  return children;
+};
 
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </Provider>
   );
 }

@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router-dom';
+import Navigation from '../components/shared/Navigation';
+import Footer from '../components/shared/Footer';
 
 const RootLayout = () => {
   return (
-    <div className="app">
-      <header className="app-header">
-        {/* Navigation will be added in Milestone 1 */}
+    <div className="flex flex-col min-h-screen">
+      <header>
+        <Navigation />
       </header>
-      <main className="app-content">
+      <main className="flex-grow">
         <Outlet />
       </main>
-      <footer className="app-footer">
-        {/* Footer content will be added later */}
-      </footer>
+      <Footer />
     </div>
   );
 };
