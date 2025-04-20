@@ -1,0 +1,101 @@
+/* 
+  Authentication feature styles for TarotLyfe application
+*/
+
+.auth {
+  &-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: $spacing-xl;
+  }
+  
+  &-card {
+    background-color: $light-text;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-lg;
+    padding: $spacing-xl;
+  }
+  
+  &-logo {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    
+    img {
+      max-width: 150px;
+    }
+  }
+  
+  &-title {
+    text-align: center;
+    margin-bottom: $spacing-lg;
+    color: $primary-color;
+  }
+  
+  &-form {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &-submit {
+    width: 100%;
+    margin-top: $spacing-md;
+  }
+  
+  &-divider {
+    display: flex;
+    align-items: center;
+    margin: $spacing-lg 0;
+    
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: $border-color;
+    }
+    
+    &-text {
+      padding: 0 $spacing-sm;
+      color: lighten($text-color, 30%);
+      font-size: 0.875rem;
+    }
+  }
+  
+  &-social {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    
+    &-button {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-sm;
+      border-radius: $border-radius-sm;
+      border: 1px solid $border-color;
+      background-color: $light-text;
+      transition: $transition-medium;
+      
+      &:hover {
+        background-color: darken($light-text, 5%);
+      }
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  
+  &-footer {
+    text-align: center;
+    margin-top: $spacing-lg;
+    font-size: 0.875rem;
+    
+    a {
+      color: $primary-color;
+      font-weight: $font-weight-medium;
+    }
+  }
+}

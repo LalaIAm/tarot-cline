@@ -23,10 +23,10 @@
 ## Development Environment
 
 ### Required Tools
-- Node.js (v14+ recommended)
-- npm or yarn for package management
+- Node.js (v18+ recommended)
+- npm for package management
 - Git for version control
-- PostgreSQL for local database
+- PostgreSQL for local database (when backend is implemented)
 - Code editor (VS Code recommended with extensions)
 
 ### Local Setup
@@ -34,23 +34,19 @@
 2. Install dependencies via `npm install`
 3. Set up environment variables in `.env` file
 4. Start development server with `npm run dev`
-5. Run local database or connect to development database
+5. Access the site at http://localhost:5173
 
 ### Environment Variables
 ```
 # API configuration
-API_URL=http://localhost:8000
-API_KEY=your_api_key
-
-# Database configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/tarotlyfe
+VITE_API_URL=http://localhost:8000
+VITE_API_KEY=your_api_key
 
 # Authentication 
-CLERK_FRONTEND_API=clerk_public_key
-CLERK_API_KEY=clerk_secret_key
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 
 # Other services
-AI_INTERPRETATION_API_KEY=your_ai_api_key
+VITE_AI_INTERPRETATION_API_KEY=your_ai_api_key
 ```
 
 ## Technical Constraints
@@ -77,23 +73,26 @@ AI_INTERPRETATION_API_KEY=your_ai_api_key
 ## Dependencies
 
 ### Frontend Dependencies
+The project is built using Vite as the build tool. Current primary dependencies include:
+
 ```json
 {
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
-    "@reduxjs/toolkit": "^1.9.3",
-    "react-router-dom": "^6.8.2",
-    "sass": "^1.58.3",
-    "axios": "^1.3.4",
-    "@clerk/clerk-react": "^4.0.0"
+    "react-redux": "latest",
+    "@reduxjs/toolkit": "latest",
+    "react-router-dom": "latest",
+    "sass": "latest",
+    "axios": "latest",
+    "@clerk/clerk-react": "latest"
   },
   "devDependencies": {
-    "vite": "^4.1.4",
-    "eslint": "^8.35.0",
-    "jest": "^29.4.3",
-    "react-testing-library": "^8.0.1"
+    "vite": "latest",
+    "eslint": "latest",
+    "jest": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/jest-dom": "latest"
   }
 }
 ```

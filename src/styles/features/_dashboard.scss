@@ -1,0 +1,88 @@
+/* 
+  Dashboard feature styles for TarotLyfe application
+*/
+
+.dashboard {
+  &-header {
+    background-color: rgba($primary-color, 0.05);
+    padding: $spacing-lg;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-xl;
+    
+    &-title {
+      color: $primary-color;
+      margin-bottom: $spacing-sm;
+    }
+    
+    &-subtitle {
+      color: lighten($text-color, 20%);
+      font-size: 1rem;
+    }
+    
+    &-actions {
+      margin-top: $spacing-md;
+      display: flex;
+      gap: $spacing-md;
+      flex-wrap: wrap;
+    }
+  }
+  
+  &-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    &-title {
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      
+      svg {
+        margin-right: $spacing-sm;
+        color: $primary-color;
+      }
+    }
+    
+    &-content {
+      flex: 1;
+    }
+  }
+  
+  &-widget {
+    margin-bottom: $spacing-lg;
+    
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-md;
+      
+      h3 {
+        margin-bottom: 0;
+        font-size: 1.25rem;
+      }
+    }
+    
+    &-more {
+      font-size: 0.875rem;
+      color: $primary-color;
+    }
+  }
+  
+  &-quick-actions {
+    background-color: rgba($primary-color, 0.05);
+    padding: $spacing-lg;
+    border-radius: $border-radius-md;
+    margin-bottom: $spacing-lg;
+    
+    &-title {
+      margin-bottom: $spacing-md;
+      font-size: 1.125rem;
+    }
+    
+    &-list {
+      display: grid;
+      grid-gap: $spacing-sm;
+    }
+  }
+}

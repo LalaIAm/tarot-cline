@@ -1,0 +1,164 @@
+/* 
+  Tarot Reading feature styles for TarotLyfe application
+*/
+
+.tarot {
+  &-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+    
+    &-container {
+      perspective: 1000px;
+      text-align: center;
+    }
+  }
+  
+  &-card {
+    width: 140px;
+    height: 240px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease-in-out;
+    cursor: pointer;
+    margin: 0 auto;
+    
+    &-container {
+      margin-bottom: $spacing-lg;
+    }
+    
+    &.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    &-front, &-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: $border-radius-sm;
+      overflow: hidden;
+      box-shadow: $box-shadow-md;
+    }
+    
+    &-front {
+      background-color: $dark-text;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: linear-gradient(45deg, rgba($primary-color, 0.8), rgba($secondary-color, 0.8));
+      
+      .card-pattern {
+        opacity: 0.2;
+        width: 80%;
+        height: 80%;
+      }
+    }
+    
+    &-back {
+      transform: rotateY(180deg);
+      background-color: $light-text;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    &-title {
+      margin-top: $spacing-sm;
+      font-size: 0.875rem;
+      font-weight: $font-weight-medium;
+      text-align: center;
+    }
+    
+    &-position {
+      font-size: 0.75rem;
+      color: lighten($text-color, 30%);
+      text-align: center;
+    }
+  }
+  
+  &-reading {
+    &-header {
+      text-align: center;
+      margin-bottom: $spacing-xl;
+    }
+    
+    &-spread {
+      margin-bottom: $spacing-xl;
+      
+      &-name {
+        text-align: center;
+        margin-bottom: $spacing-md;
+        font-weight: $font-weight-medium;
+        color: $primary-color;
+      }
+      
+      &-layout {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: $spacing-xl;
+        
+        @media (max-width: $breakpoint-md) {
+          gap: $spacing-lg;
+        }
+      }
+    }
+    
+    &-interpretation {
+      background-color: $light-text;
+      border-radius: $border-radius-md;
+      padding: $spacing-xl;
+      margin-top: $spacing-xl;
+      
+      &-header {
+        margin-bottom: $spacing-lg;
+        text-align: center;
+      }
+      
+      &-content {
+        line-height: 1.7;
+      }
+      
+      &-card {
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-lg;
+        border-bottom: 1px solid $border-color;
+        
+        &:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+        
+        &-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: $spacing-sm;
+          
+          h4 {
+            margin-bottom: 0;
+            margin-right: $spacing-sm;
+          }
+          
+          .card-position {
+            font-size: 0.875rem;
+            color: lighten($text-color, 30%);
+          }
+        }
+      }
+    }
+  }
+  
+  &-actions {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+  }
+}

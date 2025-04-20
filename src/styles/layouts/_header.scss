@@ -1,0 +1,66 @@
+/* 
+  Header layout styles for TarotLyfe application
+*/
+
+.app-header {
+  background-color: $light-text;
+  padding: $spacing-md 0;
+  box-shadow: $box-shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  &-logo {
+    font-family: $font-family-secondary;
+    font-weight: $font-weight-bold;
+    font-size: 1.5rem;
+    color: $primary-color;
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+  
+  &-nav {
+    display: flex;
+    align-items: center;
+    
+    &-item {
+      margin-left: $spacing-md;
+      
+      a {
+        color: $text-color;
+        transition: $transition-quick;
+        
+        &:hover, &.active {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    &-nav {
+      margin-top: $spacing-sm;
+      flex-wrap: wrap;
+      
+      &-item {
+        margin-left: 0;
+        margin-right: $spacing-md;
+        margin-bottom: $spacing-xs;
+      }
+    }
+  }
+}

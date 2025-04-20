@@ -1,0 +1,98 @@
+/* 
+  Main content layout styles for TarotLyfe application
+*/
+
+.app-content {
+  padding: $spacing-xl 0;
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  // Page layouts
+  .page {
+    &-header {
+      margin-bottom: $spacing-xl;
+      text-align: center;
+      
+      h1 {
+        margin-bottom: $spacing-sm;
+        color: $primary-color;
+      }
+      
+      p {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        color: lighten($text-color, 20%);
+      }
+    }
+    
+    &-section {
+      margin-bottom: $spacing-xxl;
+      
+      &-title {
+        margin-bottom: $spacing-lg;
+        position: relative;
+        padding-bottom: $spacing-sm;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 50px;
+          height: 3px;
+          background-color: $primary-color;
+        }
+      }
+    }
+  }
+  
+  // Grid layouts
+  .grid {
+    display: grid;
+    grid-gap: $spacing-lg;
+    
+    &-2 {
+      @media (min-width: $breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    &-3 {
+      @media (min-width: $breakpoint-md) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    &-4 {
+      @media (min-width: $breakpoint-md) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+  
+  // Dashboard layout
+  .dashboard {
+    display: grid;
+    grid-gap: $spacing-lg;
+    
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: 7fr 3fr;
+      
+      &-main {
+        grid-column: 1;
+      }
+      
+      &-sidebar {
+        grid-column: 2;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+/* 
+  Main SCSS file for TarotLyfe application
+  This file imports all other SCSS files
+*/
+
+// Variables
+@import 'variables';
+
+// Base styles
+@import 'base';
+
+// Components
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+
+// Layouts
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/main';
+
+// Features
+@import 'features/authentication';
+@import 'features/dashboard';
+@import 'features/tarot-reading';
+@import 'features/journaling';
