@@ -28,19 +28,19 @@
 
 ## What's Left To Build
 
-2. **Milestone 3: Journaling Feature and User Dashboard**
+1. **Milestone 3: Journaling Feature and User Dashboard**
    - [ ] Journal entry creation and editing
    - [ ] Tagging and categorization system
    - [ ] Search functionality
    - [ ] Dashboard integration with readings and journal entries
 
-3. **Milestone 4: Account Management and Security Enhancements**
+2. **Milestone 4: Account Management and Security Enhancements**
    - [ ] Profile editing functionality
    - [ ] Password management
    - [ ] Account recovery options
    - [ ] Preferences and settings
 
-4. **Milestone 5: Testing, Launch Preparation, and Post-Launch Support**
+3. **Milestone 5: Testing, Launch Preparation, and Post-Launch Support**
    - [ ] Unit testing suite
    - [ ] Integration testing
    - [ ] End-to-end testing
