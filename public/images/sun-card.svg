@@ -1,0 +1,47 @@
+<svg width="300" height="500" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardFrontGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd9da" />
+      <stop offset="100%" stop-color="#f8efe6" />
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#433c53" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Card Base -->
+  <rect width="300" height="500" rx="15" fill="url(#cardFrontGradient)" filter="url(#cardShadow)" />
+  
+  <!-- Card Border -->
+  <rect x="15" y="15" width="270" height="470" rx="10" stroke="#6c4b93" stroke-width="2" fill="none" />
+  
+  <!-- Card Title at Top -->
+  <text x="150" y="50" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="24" fill="#121063">XIX - THE SUN</text>
+  
+  <!-- Main Sun Illustration -->
+  <circle cx="150" cy="200" r="70" fill="#f49e4c" />
+  <circle cx="150" cy="200" r="55" fill="#ffd9da" />
+  
+  <!-- Sun Rays -->
+  <path d="M150 110 L150 80 M150 290 L150 320 M60 200 L30 200 M240 200 L270 200
+           M88 138 L67 117 M212 138 L233 117 M88 262 L67 283 M212 262 L233 283" 
+        stroke="#f49e4c" stroke-width="8" />
+  
+  <!-- Face in the Sun -->
+  <circle cx="130" cy="185" r="8" fill="#6c4b93" />
+  <circle cx="170" cy="185" r="8" fill="#6c4b93" />
+  <path d="M130 220 Q150 240 170 220" stroke="#6c4b93" stroke-width="5" fill="none" />
+  
+  <!-- Flowers at Bottom -->
+  <circle cx="100" cy="350" r="20" fill="#9656a1" />
+  <circle cx="100" cy="350" r="12" fill="#ffd9da" />
+  <circle cx="200" cy="350" r="20" fill="#9656a1" />
+  <circle cx="200" cy="350" r="12" fill="#ffd9da" />
+  
+  <!-- Child Figure -->
+  <circle cx="150" cy="350" r="35" fill="#ffd9da" stroke="#3d3b8e" stroke-width="2" /> <!-- Head -->
+  <rect x="140" y="385" width="20" height="50" rx="10" fill="#ffd9da" stroke="#3d3b8e" stroke-width="2" /> <!-- Body -->
+  
+  <!-- Card Number at Bottom -->
+  <text x="150" y="470" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="24" fill="#121063">XIX</text>
+</svg>
