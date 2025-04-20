@@ -3,15 +3,17 @@ import { createBrowserRouter } from 'react-router-dom';
 // Layouts
 import RootLayout from '../layouts/RootLayout';
 
+// Auth Components
+import AuthContainer from '../features/authentication/AuthContainer';
+import ProtectedRoute from '../components/shared/ProtectedRoute';
+
 // Pages
-// These components will be created later in Milestone 1
-const LandingPage = () => <div>Landing Page</div>;
-const AuthPage = () => <div>Authentication Page</div>;
-const DashboardPage = () => <div>Dashboard Page</div>;
-const NotFoundPage = () => <div>404 - Page Not Found</div>;
+import LandingPage from '../features/landing/LandingPage';
+import Dashboard from '../features/dashboard/Dashboard';
+import NotFoundPage from '../components/shared/NotFoundPage';
 
 // Demo Components
-import ButtonDemo from '../components/ButtonDemo';
+
 
 // Create router
 export const router = createBrowserRouter([
@@ -25,17 +27,18 @@ export const router = createBrowserRouter([
         element: <LandingPage />,
       },
       {
-        path: 'auth',
-        element: <AuthPage />,
+        path: 'auth/*',
+        element: <AuthContainer />,
       },
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
-      {
-        path: 'button-demo',
-        element: <ButtonDemo />,
-      },
+     
     ],
   },
 ]);

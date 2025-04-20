@@ -5,19 +5,21 @@
 ### Frontend
 - **Core Framework**: React.js
 - **State Management**: Redux Toolkit
-- **Styling**: SCSS for custom styling
-- **UI Components**: Custom components with a consistent design system
+- **Styling**: 
+  - SCSS for custom styling (needs refactoring to address deprecation warnings)
+  - TailwindCSS for component styling
+- **UI Components**: Custom components with TailwindCSS
 - **Routing**: React Router for navigation
-- **Form Handling**: Custom form handling
+- **Form Handling**: Custom form handling with React hooks
 
 ### Backend
-- **Server**: Node.js
+- **Server**: Node.js (planned, not yet implemented)
 - **API Design**: RESTful API endpoints
-- **Database**: PostgreSQL for relational data storage (through Supabase)
+- **Database**: PostgreSQL via Supabase
 - **Authentication**: Supabase for user authentication and session management
 
 ### Third-Party Services
-- **AI Integration**: External API for tarot card interpretations
+- **AI Integration**: External API for tarot card interpretations (to be implemented)
 - **Supabase**: Backend-as-a-Service for authentication, database, and real-time capabilities
 - **Hosting/Deployment**: TBD (likely Vercel, Netlify, or AWS)
 
@@ -27,13 +29,16 @@
 - Node.js (v18+ recommended)
 - npm for package management
 - Git for version control
-- PostgreSQL for local database (when backend is implemented)
 - Code editor (VS Code recommended with extensions)
 
 ### Local Setup
 1. Clone repository
 2. Install dependencies via `npm install`
-3. Set up environment variables in `.env` file
+3. Set up environment variables in `.env` file:
+   ```
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 4. Start development server with `npm run dev`
 5. Access the site at http://localhost:5173
 
@@ -74,51 +79,45 @@ VITE_AI_INTERPRETATION_API_KEY=your_ai_api_key
 
 ## Dependencies
 
-### Frontend Dependencies
-The project is built using Vite as the build tool. Current primary dependencies include:
+### Current Dependencies
+The project is built using Vite as the build tool. Primary dependencies include:
 
 ```json
 {
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "latest",
-    "@reduxjs/toolkit": "latest",
-    "react-router-dom": "latest",
-    "sass": "latest",
-    "axios": "latest",
-    "@supabase/supabase-js": "latest"
+    "@clerk/clerk-react": "^5.28.2",  // NOTE: Not currently used, using Supabase instead
+    "@reduxjs/toolkit": "^2.7.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "axios": "^1.8.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.5.1",
+    "sass": "^1.86.3"
   },
   "devDependencies": {
-    "vite": "latest",
-    "eslint": "latest",
-    "jest": "latest",
-    "@testing-library/react": "latest",
-    "@testing-library/jest-dom": "latest"
+    "@eslint/js": "^9.22.0",
+    "@tailwindcss/postcss": "^4.1.4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "lucide-react": "^0.501.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
+    "vite": "^6.3.1"
   }
 }
 ```
 
-### Backend Dependencies
-```json
-{
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "pg": "^8.9.0",
-    "knex": "^2.4.2",
-    "jsonwebtoken": "^9.0.0",
-    "@supabase/supabase-js": "latest",
-    "winston": "^3.8.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20",
-    "jest": "^29.4.3",
-    "supertest": "^6.3.3"
-  }
-}
-```
+**Note**: While Clerk is present in the dependencies, we've fully implemented authentication with Supabase and are not using Clerk.
 
 ## Development Patterns & Conventions
 
@@ -129,19 +128,22 @@ The project is built using Vite as the build tool. Current primary dependencies 
     /features
       /authentication
       /dashboard
+      /landing
       /tarotReading
       /journaling
       /accountManagement
     /components
       /shared
+      /ui
     /services
     /utils
+    /layouts
     /styles
   ```
 
 ### Coding Conventions
 - **File Naming**: 
-  - React components: PascalCase (e.g., `TarotCard.js`)
+  - React components: PascalCase (e.g., `TarotCard.jsx`)
   - Utility functions: camelCase (e.g., `formatDate.js`)
   - Constants: UPPER_SNAKE_CASE (e.g., `API_ENDPOINTS.js`)
 
@@ -192,23 +194,39 @@ The project is built using Vite as the build tool. Current primary dependencies 
   ```
 
 ### State Management
-- **Global State**: Redux for application-wide state
+- **Global State**: Redux Toolkit for application-wide state
+- **Async Operations**: Redux Toolkit's createAsyncThunk for API calls
 - **Local State**: React hooks for component-specific state
-- **Server State**: Handled through service layer with caching
+- **Server State**: Handled through service layer with Supabase
+
+## Implemented Features
+
+### Authentication
+- Full authentication flow with Supabase
+- Login, signup, password reset functionality
+- Protected routes with authentication checks
+- Redux integration for auth state management
+
+### UI Components
+- Responsive navigation with mobile menu
+- Footer component with social links
+- Landing page with feature highlights
+- Dashboard placeholder for authenticated users
+- Form inputs with validation
 
 ## Testing Strategy
 
-### Frontend Testing
+### Frontend Testing (To Be Implemented)
 - **Unit Tests**: Jest for utility functions and isolated component logic
 - **Component Tests**: React Testing Library for component rendering and interactions
 - **Integration Tests**: Key user flows across multiple components
 
-### Backend Testing
+### Backend Testing (Future)
 - **Unit Tests**: Individual service and utility functions
 - **Integration Tests**: API endpoints with database interaction
 - **End-to-End Tests**: Complete user flows from frontend to backend
 
-## Deployment & CI/CD
+## Deployment & CI/CD (Future)
 
 ### Environments
 1. **Development**: Local development environment
@@ -221,15 +239,10 @@ The project is built using Vite as the build tool. Current primary dependencies 
 - **Deployment**: Automated deployment to staging after successful tests
 - **Production Release**: Manual approval for production deployment
 
-## Monitoring & Observability
+## Known Technical Issues
 
-### Logging
-- **Client-side**: Console errors reported to monitoring service
-- **Server-side**: Structured logging with Winston
-
-### Performance Monitoring
-- **Frontend**: Load times, interaction metrics
-- **Backend**: API response times, database query performance
-- **Infrastructure**: Server health, database connections
+- SCSS has deprecation warnings that need to be addressed
+- Package.json includes unused Clerk dependency 
+- Some UI components need refactoring to follow consistent patterns
 
 This technical context document provides a comprehensive overview of the technology stack, development environment, constraints, and conventions for the TarotLyfe project. It serves as a reference for all technical decisions and should be updated as the technology evolves.
