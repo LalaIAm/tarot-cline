@@ -11,9 +11,7 @@ import ProtectedRoute from '../components/shared/ProtectedRoute';
 import LandingPage from '../features/landing/LandingPage';
 import Dashboard from '../features/dashboard/Dashboard';
 import NotFoundPage from '../components/shared/NotFoundPage';
-
-// Demo Components
-
+import TarotReadingPage from '../features/tarotReading/TarotReadingPage';
 
 // Create router
 export const router = createBrowserRouter([
@@ -38,7 +36,14 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-     
+      {
+        path: 'tarot',
+        element: (
+          <ProtectedRoute>
+            <TarotReadingPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

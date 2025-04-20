@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { selectUser } from '../authentication/authSlice';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const user = useSelector(selectUser);
@@ -23,9 +24,12 @@ const Dashboard = () => {
                 <dt className="text-sm font-medium text-gray-500">Recent Readings</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <p className="italic text-gray-500">No readings yet. Start your first reading below.</p>
-                  <button className="mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                  <Link
+                    to="/tarot"
+                    className="mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                  >
                     Start New Reading
-                  </button>
+                  </Link>
                 </dd>
               </div>
               <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

@@ -1,7 +1,7 @@
 # Active Context: TarotLyfe
 
 ## Current Focus
-The project has completed the Milestone 1 implementation phase. We have successfully implemented the authentication with Supabase, responsive navigation, landing page, and dashboard placeholder. The current focus is now shifting to preparing for Milestone 2, which involves implementing the Tarot Reading Module and AI Interpretation Engine.
+The project has completed the Milestone 1 implementation phase and we have now created a comprehensive plan for Milestone 2. With Milestone 1, we successfully implemented authentication with Supabase, responsive navigation, landing page, and dashboard placeholder. The current focus is implementing the Tarot Reading Module and AI Interpretation Engine as outlined in our Milestone 2 plan.
 
 ## Recent Changes
 - Completed Milestone 1 implementation:
@@ -12,13 +12,20 @@ The project has completed the Milestone 1 implementation phase. We have successf
   - Created landing page with hero section, feature highlights, and pricing section
   - Built dashboard placeholder page for authenticated users
   - Set up environment variables for Supabase configuration
+- Created detailed Milestone 2 implementation plan:
+  - Defined component hierarchy and file structure for tarot reading features
+  - Planned data structures for tarot cards and spread types
+  - Created timeline and technical implementation sequence
+  - Outlined AI integration options and considerations
+  - Documented database schema requirements for reading storage
 
 ## Next Steps
-1. **Milestone 2 Implementation Planning**
-   - Design tarot card components and visual representation
-   - Plan card shuffle animations and interactions
-   - Research AI integration options for tarot interpretations
-   - Design spread selection interface
+1. **Begin Milestone 2 Implementation**
+   - Create new Git branch for Milestone 2
+   - Implement the tarot card data structure (tarotData.js)
+   - Enhance the TarotCard component with flip animations
+   - Develop the TarotDeck management component
+   - Create spread selection interface
 
 2. **Technical Improvements**
    - Refactor SCSS to address deprecation warnings
@@ -48,10 +55,10 @@ The project has completed the Milestone 1 implementation phase. We have successf
 - Improving visual design with tarot-themed elements
 
 ### Pending Decisions
-- Specific AI API provider for tarot card interpretations
-- Deployment platform selection
-- Visual design for tarot cards (custom illustrations vs. traditional)
-- Database schema for storing reading history
+- Selection of specific AI API provider for tarot card interpretations (options include OpenAI, Anthropic Claude, Hugging Face models)
+- Implementation approach for AI integration (direct API, backend proxy, or Supabase Edge Functions)
+- Visual design for tarot cards (custom illustrations vs. traditional vs. gradient-based)
+- Optimal animation strategy for card shuffling and flipping
 - Integration approach for journaling features in Milestone 3
 
 ## Important Patterns & Preferences
