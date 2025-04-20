@@ -13,7 +13,7 @@ import Dashboard from '../features/dashboard/Dashboard';
 import NotFoundPage from '../components/shared/NotFoundPage';
 
 // Demo Components
-import ButtonDemo from '../components/ButtonDemo';
+
 
 // Create router
 export const router = createBrowserRouter([
@@ -38,10 +38,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: 'button-demo',
-        element: <ButtonDemo />,
-      },
+     
     ],
   },
 ]);
