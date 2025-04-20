@@ -1,12 +1,18 @@
 # Active Context: TarotLyfe
 
 ## Current Focus
-The project has completed both Milestone 1 and Milestone 2 implementation phases. With Milestone 1, we successfully implemented authentication with Supabase, responsive navigation, landing page, and dashboard placeholder. With Milestone 2, we've implemented the complete Tarot Reading Module and AI Interpretation Engine. 
+The project has completed both Milestone 1 and Milestone 2 implementation phases. With Milestone 1, we successfully implemented authentication with Supabase, responsive navigation, landing page, and dashboard placeholder. With Milestone 2, we've implemented the complete Tarot Reading Module and AI Interpretation Engine.
 
-We have now completed planning for Milestone 3 and are ready to begin implementation. This milestone will add the journaling feature and enhance the user dashboard with integration between tarot readings and journal entries. A comprehensive implementation plan has been created in `memory-bank/milestone3-plan.md`.
+We have begun implementing Milestone 3 and have completed Phase 1 (Database Setup). We've created the database schema for journals, journal tags, and tag mappings with appropriate Row-Level Security policies. We've also extended the Supabase service layer with comprehensive journal and tag management functions, and implemented the Redux state management for the journaling feature. We are now ready to proceed with Phase 2 (Service Layer) to continue building the journaling functionality.
 
 ## Recent Changes
-- Completed Milestone 2 implementation (ALL phases):
+- Completed Milestone 3 Phase 1 (Database Setup):
+  - Created migration script for journal-related tables with Row-Level Security policies
+  - Extended supabaseService.js with comprehensive journal and tag management functions
+  - Implemented journalingSlice.js Redux state management with actions, reducers, and selectors
+  - Integrated the journaling reducer into the Redux store
+
+- Previously completed Milestone 2 implementation (ALL phases):
   - Created comprehensive tarot card data structure with all 78 cards (tarotData.js)
   - Built TarotDeck component for managing and interacting with cards
   - Implemented SpreadSelector with multiple spread layouts (Single Card, Three-Card, Celtic Cross, etc.)
@@ -36,9 +42,8 @@ We have now completed planning for Milestone 3 and are ready to begin implementa
     - Connected all components with comprehensive state management
 
 ## Next Steps
-1. **Implement Milestone 3 according to plan**
-   - **Phase 1**: Create database schema for journals, tags, and mapping tables
-   - **Phase 2**: Extend supabaseService.js with journal-related functions
+1. **Continue implementing Milestone 3**
+   - **Phase 2** (Current): Complete service layer implementation
    - **Phase 3**: Implement journal entry form with rich text editing
    - **Phase 4**: Create journal management with filtering and search
    - **Phase 5**: Enhance dashboard with journal widgets
@@ -59,6 +64,9 @@ We have now completed planning for Milestone 3 and are ready to begin implementa
 ## Active Decisions & Considerations
 
 ### Architecture Decisions
+- Implemented Redux slice for journaling with proper state structure and async thunks
+- Designed comprehensive Supabase service for journal and tag management
+- Created database schema with appropriate relationships and RLS policies
 - Using Supabase for authentication and database instead of Clerk
 - Feature-based code organization maintains clear separation of concerns
 - Redux Toolkit async thunks for authentication actions
@@ -75,7 +83,7 @@ We have now completed planning for Milestone 3 and are ready to begin implementa
 ### Pending Decisions
 - Selection of specific AI API provider for production (options include OpenAI, Anthropic Claude, Hugging Face models)
 - Implementation approach for AI integration (direct API, backend proxy, or Supabase Edge Functions)
-- Selection of rich text editor library for journal entries (options include Quill, Draft.js, TipTap)
+- Selection of rich text editor library for journal entries (options include Quill, Draft.js, TipTap) - needs to be decided in Phase 3
 - Design of dashboard statistics and activity visualizations
 - Mobile layout optimizations for the journal interface
 
@@ -105,7 +113,7 @@ We have now completed planning for Milestone 3 and are ready to begin implementa
 - Card-based UI components with hover effects and visual hierarchy
 
 ## Learnings & Project Insights
-Insights from Milestone 1 and 2 implementations include:
+Insights from Milestone 1, 2, and the beginning of Milestone 3 implementations include:
 
 - The Supabase authentication integration provides a robust foundation for the application
 - Feature-based organization makes it easier to locate and update related code
@@ -122,7 +130,7 @@ New insights from Milestone 2:
 - Animation can significantly enhance the mystical experience of tarot card interaction
 - Tailwind CSS utility classes speed up consistent UI development across components
 
-Additional insights from completing all phases:
+Additional insights from completing all phases of Milestone 2:
 - Proper database schema design with Row-Level Security is crucial for user data privacy
 - Caching strategies can significantly improve performance for API-dependent features
 - Context-aware AI responses provide more meaningful and personalized experiences
@@ -130,6 +138,13 @@ Additional insights from completing all phases:
 - Component reuse between main features and dashboard widgets creates consistency
 - Structured JSON responses from interpretation services allow for flexible UI rendering
 
-The project now has both a solid foundation with authentication and the core tarot reading functionality implemented. This puts us in a strong position to implement the journaling features and enhance the overall application in Milestone 3.
+New insights from Milestone 3 Phase 1:
+- Creating junction tables for many-to-many relationships (journal entries to tags) provides flexibility
+- Designing database tables with appropriate foreign key relationships ensures data integrity
+- Implementing Row-Level Security at the database level is essential for multi-user applications
+- Using complex query filters in Supabase requires proper indexing for performance
+- Handling nested relationships (like journal entries -> tags) requires careful state management
+
+The project now has both a solid foundation with authentication, the core tarot reading functionality, and the beginning of the journaling feature. The database schema and service layer for journaling are in place, which provides a strong foundation for implementing the user interface components in the upcoming phases.
 
 This active context document will be regularly updated as the project evolves, with particular attention to current focus, recent changes, and next steps to ensure continuity between development sessions.

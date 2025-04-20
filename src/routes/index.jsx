@@ -15,6 +15,11 @@ import TarotReadingPage from '../features/tarotReading/TarotReadingPage';
 import ReadingHistory from '../features/tarotReading/ReadingHistory';
 import ReadingInterpretation from '../features/tarotReading/ReadingInterpretation';
 
+// Journaling Components
+import JournalingPage from '../features/journaling/JournalingPage';
+import JournalEntryForm from '../features/journaling/JournalEntryForm';
+import JournalEntryDetail from '../features/journaling/JournalEntryDetail';
+
 // Create router
 export const router = createBrowserRouter([
   {
@@ -59,6 +64,38 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ReadingInterpretation />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'journal',
+        element: (
+          <ProtectedRoute>
+            <JournalingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'journal/new',
+        element: (
+          <ProtectedRoute>
+            <JournalEntryForm />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'journal/:id',
+        element: (
+          <ProtectedRoute>
+            <JournalEntryDetail />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'journal/edit/:id',
+        element: (
+          <ProtectedRoute>
+            <JournalEntryForm />
           </ProtectedRoute>
         ),
       },

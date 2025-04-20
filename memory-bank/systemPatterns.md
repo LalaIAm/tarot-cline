@@ -5,17 +5,18 @@
 TarotLyfe follows a modern web application architecture with the following key components:
 
 ```
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   React Frontend │     │  Node.js Backend │     │    PostgreSQL    │
-│   (Client-side)  │────▶│   (Server-side)  │────▶│    Database      │
-└──────────────────┘     └──────────────────┘     └──────────────────┘
-         │                        │                        
-         │                        │                        
-         ▼                        ▼                        
-┌──────────────────┐     ┌──────────────────┐             
-│     Clerk        │     │      AI API      │             
-│  Authentication  │     │  (Interpretation) │             
-└──────────────────┘     └──────────────────┘             
+┌──────────────────┐                      ┌──────────────────┐
+│   React Frontend │                      │    PostgreSQL    │
+│   (Client-side)  │─────────────────────▶│    Database      │
+└──────────────────┘                      └──────────────────┘
+         │                                          ▲
+         │                                          │
+         ▼                                          │
+┌──────────────────┐                      ┌──────────────────┐
+│    Supabase      │                      │      AI API      │
+│  Authentication  │─────────────────────▶│  (Interpretation) │
+│   & Database     │                      └──────────────────┘
+└──────────────────┘
 ```
 
 ## Key Design Patterns
@@ -44,25 +45,77 @@ TarotLyfe follows a modern web application architecture with the following key c
 
 ### Backend Patterns
 
-1. **RESTful API Design**
-   - Resource-oriented endpoints
-   - Standard HTTP methods (GET, POST, PUT, DELETE)
-   - Consistent response formats
+1. **Supabase Service Pattern**
+   - Direct database access using Supabase client
+   - Row-Level Security policies for data protection
+   - Reusable service functions for database operations
+   - Consistent error handling across service functions
 
 2. **Service Layer Pattern**
    - Business logic encapsulated in service modules
-   - Clear separation from controllers/routes
+   - Clear separation from UI components
    - Reusable business logic functions
 
-3. **Repository Pattern**
-   - Data access logic abstracted through repositories
-   - Database interactions isolated from business logic
-   - Facilitates testing and potential database changes
+3. **Repository-like Pattern with Supabase**
+   - Data access logic abstracted through service functions
+   - Database interactions isolated from React components
+   - Consistent query patterns with filtering and pagination
 
-4. **Middleware Pattern**
-   - Request processing through composable middleware
-   - Authentication, logging, error handling as middleware
-   - Request/response transformation
+4. **Security Pattern with Row-Level Security**
+   - Database-level access control using RLS policies
+   - User-based data filtering at the database level
+   - JWT authentication integrated with data access
+
+## Data Models
+
+### Tarot Reading Data Model
+
+```
+readings
+├── id (UUID, PK)
+├── user_id (UUID, FK to auth.users)
+├── question (TEXT)
+├── spread_type (TEXT)
+├── reading_data (JSONB)
+├── interpretation (JSONB)
+├── created_at (TIMESTAMP)
+└── updated_at (TIMESTAMP)
+
+reading_cards
+├── id (UUID, PK)
+├── reading_id (UUID, FK to readings)
+├── card_name (TEXT)
+├── position (TEXT)
+├── orientation (TEXT)
+├── position_order (INTEGER)
+└── created_at (TIMESTAMP)
+```
+
+### Journaling Data Model
+
+```
+journals
+├── id (UUID, PK)
+├── user_id (UUID, FK to auth.users)
+├── title (TEXT)
+├── content (TEXT)
+├── reading_id (UUID, FK to readings, nullable)
+├── mood (TEXT, nullable)
+├── created_at (TIMESTAMP)
+└── updated_at (TIMESTAMP)
+
+journal_tags
+├── id (UUID, PK)
+├── name (TEXT)
+├── user_id (UUID, FK to auth.users)
+└── created_at (TIMESTAMP)
+
+journal_tag_mappings
+├── id (UUID, PK)
+├── journal_id (UUID, FK to journals)
+├── tag_id (UUID, FK to journal_tags)
+└── created_at (TIMESTAMP)
+```
 
 ## Component Relationships
 
@@ -79,12 +132,19 @@ App
 │   │   ├── RecentReadingsWidget
 │   │   └── JournalEntriesWidget
 │   ├── TarotReadingFeature
+│   │   ├── UserIntent
 │   │   ├── SpreadSelector
 │   │   ├── TarotDeck
-│   │   └── ReadingInterpretation
+│   │   ├── ShuffleAnimation
+│   │   ├── ReadingInterpretation
+│   │   └── ReadingHistory
 │   ├── JournalingFeature
 │   │   ├── JournalEntryForm
-│   │   └── JournalEntryList
+│   │   ├── JournalTagInput
+│   │   ├── JournalEntryList
+│   │   ├── JournalEntryDetail
+│   │   ├── JournalFilters
+│   │   └── SearchBar
 │   └── AccountManagement
 │       ├── ProfileEditor
 │       └── PreferencesManager
@@ -98,16 +158,19 @@ App
 ### Data Flow Patterns
 
 1. **User Authentication Flow**
-   - User credentials → Clerk Auth → JWT Token → Protected Routes
-   - Token validation on protected API endpoints
+   - User credentials → Supabase Auth → JWT Token → Protected Routes
+   - Token validation via Supabase client for protected data access
 
 2. **Tarot Reading Flow**
-   - User input → API request → AI interpretation → Display results
-   - Reading saved to database → Available for journaling
+   - User intent capture → Spread selection → Card shuffling and drawing
+   - Card data → AI interpretation service → Interpretation display
+   - Reading saved to Supabase → Available in history and for journaling
 
 3. **Journaling Flow**
-   - Journal entry creation → Validation → Database storage
-   - Optionally linked to tarot reading → Bidirectional relationship
+   - Journal entry creation with title, content, mood, tags
+   - Validation → Supabase storage → Tag creation and mapping
+   - Optionally linked to tarot reading via reading_id
+   - Bidirectional relationship with readings for cross-referencing
 
 4. **Dashboard Data Flow**
    - Initial load → Fetch recent readings and entries
@@ -149,9 +212,9 @@ App
 ## Security Patterns
 
 1. **Authentication Security**
-   - JWT token-based authentication
-   - Token refresh strategy
-   - Role-based access control
+   - Supabase JWT token-based authentication
+   - Session management with token refresh
+   - Protected routes in React Router
 
 2. **Data Security**
    - Input validation and sanitization
@@ -176,9 +239,9 @@ App
 ## Critical Implementation Paths
 
 1. **Authentication System**
-   - Clerk integration
-   - Protected routes in React
-   - JWT validation middleware
+   - Supabase authentication integration
+   - Protected routes in React Router
+   - Auth state management with Redux
 
 2. **Tarot Reading Engine**
    - Card selection and shuffling logic
@@ -186,9 +249,11 @@ App
    - Reading persistence
 
 3. **Journaling System**
-   - Rich text editing
-   - Tagging and categorization
-   - Search indexing
+   - Rich text editing for journal content
+   - Tagging system with many-to-many relationships
+   - Filtering by tags, mood, date, and reading connection
+   - Full-text search across journal entries
+   - Database schema with appropriate relationships and indices
 
 4. **Dashboard Integration**
    - Data aggregation and presentation
