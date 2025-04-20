@@ -9,7 +9,7 @@ The project has completed the Milestone 1 implementation phase. We have successf
   - Created authentication components (login, signup, password reset, confirmation)
   - Implemented protected routes for authenticated users
   - Developed responsive navigation and footer components
-  - Created landing page with hero section and feature highlights
+  - Created landing page with hero section, feature highlights, and pricing section
   - Built dashboard placeholder page for authenticated users
   - Set up environment variables for Supabase configuration
 
@@ -76,6 +76,8 @@ The project has completed the Milestone 1 implementation phase. We have successf
 - Mobile-first responsive approach
 - Seamless integration between tarot readings and journaling
 - Privacy-focused design with secure user data handling
+- Consistent use of dark themes with gradient accents across sections
+- Card-based UI components with hover effects and visual hierarchy
 
 ## Learnings & Project Insights
 Insights from Milestone 1 implementation include:
