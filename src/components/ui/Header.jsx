@@ -41,10 +41,10 @@ const Header = () => {
           </Link>
         </nav>
         <div className='hidden md:flex items-center gap-4'>
-          <Button variant='outline' size='sm'>
+          <Button variant='outline' size='sm' data-test='log-in'>
             Log In
           </Button>
-          <Button size='sm'>Sign Up</Button>
+          <Button size='sm' data-test='sign-up'>Sign Up</Button>
         </div>
         <button
           className='md:hidden p-2'

@@ -73,6 +73,7 @@ const Login = () => {
               placeholder="Email address"
               value={formData.email}
               onChange={handleChange}
+              data-test='email-input'
             />
           </div>
           <div>
@@ -87,6 +88,7 @@ const Login = () => {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
+              data-test='password-input'
             />
           </div>
         </div>
@@ -96,6 +98,7 @@ const Login = () => {
             type="submit"
             disabled={isLoading}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:bg-purple-300"
+            data-test='login-button'
           >
             {isLoading ? (
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">

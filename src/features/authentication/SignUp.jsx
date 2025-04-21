@@ -134,7 +134,8 @@ const SignUp = () => {
               className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
               placeholder="Email address"
               value={formData.email}
-              onChange={handleChange}
+              onChange={handleChange} 
+              data-test='email-input'
             />
             {formErrors.email && (
               <p className="mt-1 text-xs text-red-500">{formErrors.email}</p>
@@ -153,6 +154,7 @@ const SignUp = () => {
               placeholder="Password (min. 8 characters)"
               value={formData.password}
               onChange={handleChange}
+              data-test='password-input'
             />
             {formErrors.password && (
               <p className="mt-1 text-xs text-red-500">{formErrors.password}</p>
@@ -171,6 +173,7 @@ const SignUp = () => {
               placeholder="Confirm password"
               value={formData.confirmPassword}
               onChange={handleChange}
+              data-test='password-confirmation-input'
             />
             {formErrors.confirmPassword && (
               <p className="mt-1 text-xs text-red-500">{formErrors.confirmPassword}</p>
@@ -183,6 +186,7 @@ const SignUp = () => {
             type="submit"
             disabled={isLoading}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:bg-purple-300"
+            data-test='signup-button'
           >
             {isLoading ? (
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">

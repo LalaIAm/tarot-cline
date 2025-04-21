@@ -1,0 +1,35 @@
+{
+  "singleCardReading": {
+    "spread": "single",
+    "userIntent": "What should I focus on today?",
+    "cardIds": ["2-cups"],
+    "interpretation": {
+      "summary": "Today is a good day for meaningful connections and partnerships.",
+      "details": "The Two of Cups indicates harmony, partnership, and mutual respect. Focus on strengthening your relationships and finding common ground with others.",
+      "keyThemes": ["connection", "partnership", "harmony"]
+    },
+    "createdAt": "2025-04-20T10:00:00Z"
+  },
+  "threeCardReading": {
+    "spread": "three-card",
+    "userIntent": "What is my past, present, and future?",
+    "cardIds": ["4-swords", "the-tower", "10-pentacles"],
+    "interpretation": {
+      "summary": "You've been through a period of rest, are experiencing significant change, and are moving toward abundance.",
+      "details": "The Four of Swords in your past indicates a time of rest and reflection. The Tower in your present signals a major upheaval or revelation that is challenging but necessary. The Ten of Pentacles in your future suggests you're heading toward financial security and family harmony.",
+      "keyThemes": ["rest", "upheaval", "abundance"]
+    },
+    "createdAt": "2025-04-19T15:30:00Z"
+  },
+  "celticCrossReading": {
+    "spread": "celtic-cross",
+    "userIntent": "What obstacles am I facing in my career?",
+    "cardIds": ["7-wands", "8-cups", "the-hierophant", "5-swords", "queen-wands", "ace-pentacles", "9-cups", "3-pentacles", "the-star", "the-sun"],
+    "interpretation": {
+      "summary": "You're facing challenges but have the determination to succeed if you let go of what no longer serves you.",
+      "details": "The Celtic Cross spread reveals that while you're experiencing competition and conflict at work, you have inner strength and passion to overcome these challenges. Your path forward involves releasing outdated approaches and embracing new opportunities with optimism.",
+      "keyThemes": ["challenge", "determination", "transformation", "opportunity"]
+    },
+    "createdAt": "2025-04-18T09:15:00Z"
+  }
+}
