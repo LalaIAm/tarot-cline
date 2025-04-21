@@ -28,10 +28,13 @@
 - ✅ Milestone 2 implementation completed (tarot reading functionality)
 - ✅ Milestone 3 Phases 1-6 completed (journaling feature implementation)
 - ✅ Cypress e2e testing suite setup for journaling feature
+- ✅ Custom Cypress commands for standardized testing
 
 ## What's In Progress
 
 - 🔄 Milestone 3 Phase 7 (Testing & Refinement)
+  - ✅ Implementing standardized test selectors with getByData custom command
+  - ✅ Adding consistent data-test attributes to React components
   - 🔄 Running and debugging e2e tests for all journaling features
   - 🔄 Identifying and fixing any bugs or edge cases
   - 🔄 Performance optimization for rich text rendering
@@ -73,14 +76,21 @@ We have made substantial progress on Milestone 3, having completed Phases 1-6 an
 - Dashboard integration tests (widgets, statistics, quick actions)
 - Authentication tests (login, logout, form validation)
 
-These tests help ensure that all components work well together and provide a smooth user experience. We are now focusing on running these tests, identifying any issues, and fixing bugs or edge cases discovered during testing.
+We've enhanced our testing strategy by:
+- Creating a custom getByData command for more consistent test selectors
+- Updating all test files to use this standardized selector pattern
+- Adding corresponding data-test attributes to React components
+- Ensuring tests are resilient to UI structure changes
+
+These improvements help ensure that all components work well together and provide a smooth user experience. We are now focusing on running these tests, identifying any issues, and fixing bugs or edge cases discovered during testing.
 
 The application now has:
 - End-to-end test coverage for all journaling features
-- Custom testing commands for authentication and data management
+- Custom testing commands for authentication, data management, and element selection
 - Test fixtures with sample data
 - Test suite organization by feature area
 - NPM scripts for running specific test categories
+- Standardized data-test attributes across components
 
 All the core journaling functionality is now in place and being thoroughly tested:
 - Rich text journal entries with mood selection and tagging
@@ -102,6 +112,7 @@ All the core journaling functionality is now in place and being thoroughly teste
 - ✅ Set up project documentation with README
 - ✅ Created authentication state slice with Redux
 - ✅ Set up Cypress for end-to-end testing
+- ✅ Created standardized testing approach with custom commands
 
 ## Milestone 1 Implementation (Completed)
 
@@ -166,6 +177,11 @@ All the core journaling functionality is now in place and being thoroughly teste
 - ✅ Added tests for dashboard integration
 - ✅ Created authentication tests
 - ✅ Added scripts to package.json for running different test categories
+- ✅ Created getByData custom command for standardized element selection
+- ✅ Added data-test attributes to React components
+- ✅ Updated test files to use the getByData custom command
+- ✅ Created comprehensive README for the Cypress testing framework
+- ✅ Committed and pushed all testing improvements to the repository
 - 🔄 Running tests to identify bugs or issues
 - 🔄 Fixing any discovered bugs or edge cases
 
@@ -219,10 +235,13 @@ All the core journaling functionality is now in place and being thoroughly teste
 
 ## Recent Decisions & Changes
 
+- Created custom getByData Cypress command for more consistent element selection
+- Added data-test attributes to React components instead of using data-testid
+- Updated all test files to use the standardized selector pattern
+- Created comprehensive documentation for the testing framework
 - Used Cypress for end-to-end testing to ensure comprehensive coverage
 - Created custom commands for common operations to improve test maintainability
 - Structured tests by feature area for better organization and targeted test runs
-- Added data-testid attributes to components to facilitate reliable testing
 - Implemented test fixtures for consistent test data across test suites
 - Updated package.json with scripts for running different test categories
 

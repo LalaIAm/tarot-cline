@@ -5,10 +5,22 @@ The project has completed both Milestone 1 and Milestone 2 implementation phases
 
 We have made significant progress on Milestone 3, having completed Phase 1 (Database Setup), Phase 2 (Service Layer), Phase 3 (Journal Entry Core), Phase 4 (Journal Management), Phase 5 (Dashboard Integration), and Phase 6 (Reading-Journal Connection). We've created the database schema for journals, journal tags, and tag mappings with appropriate Row-Level Security policies, extended the Supabase service layer with comprehensive journal and tag management functions, implemented the Redux state management for the journaling feature, added rich text editing, enhanced mood selection, advanced filtering and search for journal entries, implemented an enhanced dashboard with journal integration, activity statistics, and quick action buttons, and completed the reading-journal connection flow with visual indicators and rich previews.
 
-We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set up Cypress for end-to-end testing. We've implemented a comprehensive test suite covering all aspects of the journaling feature, including core functionality, filtering and search, reading-journal connections, dashboard integration, and authentication. This will ensure all components work well together and provide a smooth user experience.
+We are now working on Phase 7 (Testing & Refinement) of Milestone 3. We've set up Cypress for end-to-end testing and implemented a comprehensive test suite covering all aspects of the journaling feature, including core functionality, filtering and search, reading-journal connections, dashboard integration, and authentication. We've also enhanced our testing approach by adding a custom getByData command to improve selector consistency and maintainability. Additionally, we've updated our React components with consistent data-test attributes that match our test selectors.
 
 ## Recent Changes
-- **Started Milestone 3 Phase 7 (Testing & Refinement)**:
+- **Continued Milestone 3 Phase 7 (Testing & Refinement)**:
+  - Enhanced test reliability by adding a custom getByData Cypress command
+  - Updated all test files to use the consistent getByData selector pattern
+  - Added corresponding data-test attributes to React components including:
+    - JournalEntryForm (title input, mood selector, tag input, save button)
+    - JournalEntryDetail (content, tags, linked reading, edit/delete buttons)
+    - Authentication components (login/signup inputs and buttons)
+  - Updated package.json with additional scripts for targeted test runs
+  - Improved testing documentation with a comprehensive README
+  - Fixed tests for all journaling features to use the new selector pattern
+  - Committed and pushed all testing enhancements to the repository
+
+- **Previously in Milestone 3 Phase 7 (Testing & Refinement)**:
   - Set up Cypress for end-to-end testing
   - Created custom commands for Supabase authentication and data management
   - Implemented test fixture files with sample user data, journal entries, and tarot readings
@@ -17,8 +29,6 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
   - Created tests for reading-journal connection flow
   - Added tests for dashboard integration and widgets
   - Implemented authentication tests
-  - Updated package.json with scripts for running different test categories
-  - Added comprehensive documentation for the testing framework
 
 - Previously completed Milestone 3 Phase 6 (Reading-Journal Connection):
   - Created flow to journal from a reading with URL parameter passing
@@ -80,10 +90,10 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
 
 ## Next Steps
 1. **Complete implementing Milestone 3**
-   - Complete **Phase 7** (In Progress): Continue testing and refining all components
-   - Run all test suites to identify any bugs or issues
+   - Complete **Phase 7** (In Progress): Run all test suites to identify any bugs or issues
    - Fix any bugs or edge cases discovered through testing
    - Optimize performance and user experience
+   - Add additional tests for tarot reading components
 
 2. **Prepare for Milestone 4**
    - Plan for Account Management implementation
@@ -99,11 +109,12 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
    - Refactor SCSS to address deprecation warnings
    - Update imports to use modern @use and @forward syntax
    - Replace deprecated color functions with modern alternatives
-   - Add testing for tarot reading components
 
 ## Active Decisions & Considerations
 
 ### Architecture Decisions
+- Standardized testing selectors with getByData custom command for more maintainable tests
+- Using data-test attributes on components rather than data-testid for consistency with custom command
 - Using Cypress for end-to-end testing with custom commands for auth and data management
 - Structuring tests by feature area for better organization and focused test runs
 - Using Supabase for authentication and database instead of Clerk
@@ -113,9 +124,11 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
 - Mobile-first responsive design approach
 
 ### Implementation Priorities
+- Executing the test suite and ensuring all tests pass correctly
+- Fixing any issues identified during test runs
+- Ensuring all components have appropriate data-test attributes
 - Completing comprehensive testing for the journaling feature (Milestone 3 Phase 7)
 - Ensuring all user flows work correctly together
-- Fixing any bugs or issues discovered during testing
 - Optimizing performance for filtering and rich text rendering
 - Planning for Milestone 4 (Account Management)
 
@@ -128,6 +141,8 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
 ## Important Patterns & Preferences
 
 ### Project Patterns
+- Using data-test attributes for test selectors rather than CSS classes or element types
+- Custom Cypress commands for common operations
 - Early returns for error handling in React components
 - Feature-focused organization of code
 - Component-based architecture with clear hierarchy
@@ -141,7 +156,7 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
 - UPPER_SNAKE_CASE for constants
 - Event handler functions prefixed with "handle"
 - Organize components by feature in dedicated directories
-- Using data-testid attributes for test selectors
+- Using data-test attributes for test selectors
 
 ### UI/UX Considerations
 - Intuitive, engaging, and accessible interface
@@ -153,7 +168,14 @@ We are now working on Phase 7 (Testing & Refinement) of Milestone 3, having set 
 - Card-based UI components with hover effects and visual hierarchy
 
 ## Learnings & Project Insights
-Insights from Milestone 3 Phase 7 (Testing & Refinement):
+New insights from Milestone 3 Phase 7 (Testing & Refinement):
+- Standardized selector patterns with custom commands greatly improve test maintenance
+- Consistent data-test attributes make tests more resilient to UI structure changes
+- Using test-focused attributes rather than relying on UI classes decouples testing from styling
+- Organizing test files by feature helps maintain focus and allows targeted test runs
+- Adding proper data selectors to components during development is more efficient than adding them later
+
+Previous insights from Milestone 3 Phase 7 (Testing & Refinement):
 - End-to-end testing with Cypress provides important validation of user flows
 - Custom commands significantly improve test readability and maintenance
 - Testing reveals edge cases that might be missed during development
