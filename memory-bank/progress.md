@@ -28,7 +28,7 @@
 
 ## What's In Progress
 
-- 🔄 Implementing Milestone 3 (Journaling Feature) - Phase 4
+- 🔄 Implementing Milestone 3 (Journaling Feature) - Phase 6
 
 ## What's Left To Build
 
@@ -38,7 +38,8 @@
    - [x] Tagging system implementation (Phase 3)
    - [x] Visual mood selection with emoji support (Phase 3)
    - [x] Advanced journal filtering and search functionality (Phase 4)
-   - [ ] Dashboard integration with readings and journal entries (Phase 5-6)
+   - [x] Dashboard integration with readings and journal entries (Phase 5)
+   - [ ] Reading-journal connection flow (Phase 6)
 
 2. **Milestone 4: Account Management and Security Enhancements**
 

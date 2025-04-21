@@ -185,10 +185,21 @@ export const getReadingById = async (id) => {
 };
 
 // Get all readings for the current user
-export const getUserReadings = async (limit = 10, page = 0) => {
+export const getUserReadings = async (limit = 10, page = 0, countOnly = false) => {
   try {
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) throw new Error('User not authenticated');
+    
+    // If countOnly is true, just get the count without fetching the actual data
+    if (countOnly) {
+      const { count, error } = await supabase
+        .from('readings')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.user.id);
+        
+      if (error) throw error;
+      return { readings: [], count, error: null };
+    }
     
     const { data, error, count } = await supabase
       .from('readings')
@@ -315,10 +326,21 @@ export const getJournalById = async (id) => {
 };
 
 // Get all journal entries for the current user
-export const getUserJournals = async (limit = 10, page = 0, filters = {}) => {
+export const getUserJournals = async (limit = 10, page = 0, filters = {}, countOnly = false) => {
   try {
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) throw new Error('User not authenticated');
+    
+    // If countOnly is true, just get the count without fetching the actual data
+    if (countOnly) {
+      const { count, error } = await supabase
+        .from('journals')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.user.id);
+        
+      if (error) throw error;
+      return { journals: [], count, error: null };
+    }
     
     let hasTags = filters.tags && filters.tags.length > 0;
     
