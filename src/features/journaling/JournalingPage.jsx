@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchJournals, fetchTags, clearFilters, setPagination } from './journalingSlice';
+import { fetchJournals, fetchTags, clearFilters, setPagination, updateFilters } from './journalingSlice';
 import JournalEntryList from './JournalEntryList';
 import JournalFilters from './JournalFilters';
 import { Link } from 'react-router-dom';

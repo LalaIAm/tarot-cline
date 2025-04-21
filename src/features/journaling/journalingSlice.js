@@ -7,7 +7,7 @@ import {
   deleteJournal,
   getUserTags,
   createTag,
-  deleteTag
+  deleteTag,
 } from '../../services/supabaseService';
 
 /**
@@ -18,11 +18,11 @@ export const createJournal = createAsyncThunk(
   async (journalData, { rejectWithValue }) => {
     try {
       console.log('Creating new journal entry:', journalData);
-      
+
       const { data, error } = await createJournalEntry(journalData);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -38,11 +38,11 @@ export const updateJournal = createAsyncThunk(
   async ({ id, journalData }, { rejectWithValue }) => {
     try {
       console.log('Updating journal entry:', { id, journalData });
-      
+
       const { data, error } = await updateJournalEntry(id, journalData);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -58,11 +58,11 @@ export const fetchJournal = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       console.log('Fetching journal entry:', id);
-      
+
       const { journal, error } = await getJournalById(id);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return journal;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -78,11 +78,15 @@ export const fetchJournals = createAsyncThunk(
   async ({ limit = 10, page = 0, filters = {} }, { rejectWithValue }) => {
     try {
       console.log('Fetching journal entries:', { limit, page, filters });
-      
-      const { journals, count, error } = await getUserJournals(limit, page, filters);
-      
+
+      const { journals, count, error } = await getUserJournals(
+        limit,
+        page,
+        filters
+      );
+
       if (error) throw new Error(error.message);
-      
+
       return { journals, count };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -98,11 +102,11 @@ export const deleteJournalEntry = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       console.log('Deleting journal entry:', id);
-      
+
       const { error } = await deleteJournal(id);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -118,11 +122,11 @@ export const fetchTags = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       console.log('Fetching user tags');
-      
+
       const { tags, error } = await getUserTags();
-      
+
       if (error) throw new Error(error.message);
-      
+
       return tags;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -138,11 +142,11 @@ export const addTag = createAsyncThunk(
   async (tagName, { rejectWithValue }) => {
     try {
       console.log('Creating new tag:', tagName);
-      
+
       const { data, error } = await createTag(tagName);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -158,11 +162,11 @@ export const removeTag = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       console.log('Deleting tag:', id);
-      
+
       const { error } = await deleteTag(id);
-      
+
       if (error) throw new Error(error.message);
-      
+
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -179,45 +183,47 @@ const journalingSlice = createSlice({
   initialState: {
     // Current journal entry being viewed or edited
     currentJournal: null,
-    
+
     // List of journal entries
     entries: [],
     totalEntries: 0,
-    
+
     // Available tags
     tags: [],
-    
+
     // Form state for creating/editing
     formData: {
       title: '',
       content: '',
       mood: '',
       tags: [],
-      readingId: null
+      readingId: null,
     },
-    
+
     // Filters for journal list
     filters: {
       search: '',
       tags: [],
       mood: '',
       dateRange: null,
-      readingId: null
+      readingId: null,
+      sortField: 'created_at',
+      sortDirection: false // false = descending, true = ascending
     },
-    
+
     // Pagination
     pagination: {
       page: 0,
-      limit: 10
+      limit: 10,
     },
-    
+
     // UI states
     isCreating: false,
     isUpdating: false,
     isFetching: false,
     isDeleting: false,
     isLoadingTags: false,
-    
+
     // Errors
     error: null,
   },
@@ -227,10 +233,10 @@ const journalingSlice = createSlice({
     updateFormData: (state, action) => {
       state.formData = {
         ...state.formData,
-        ...action.payload
+        ...action.payload,
       };
     },
-    
+
     // Reset form data
     resetForm: (state) => {
       state.formData = {
@@ -238,11 +244,11 @@ const journalingSlice = createSlice({
         content: '',
         mood: '',
         tags: [],
-        readingId: null
+        readingId: null,
       };
       state.currentJournal = null;
     },
-    
+
     // Set current journal for editing
     setCurrentJournal: (state, action) => {
       state.currentJournal = action.payload;
@@ -253,21 +259,21 @@ const journalingSlice = createSlice({
           content: action.payload.content,
           mood: action.payload.mood || '',
           tags: action.payload.tags || [],
-          readingId: action.payload.reading_id
+          readingId: action.payload.reading_id,
         };
       }
     },
-    
+
     // Update filters
     updateFilters: (state, action) => {
       state.filters = {
         ...state.filters,
-        ...action.payload
+        ...action.payload,
       };
       // Reset to first page when filters change
       state.pagination.page = 0;
     },
-    
+
     // Clear all filters
     clearFilters: (state) => {
       state.filters = {
@@ -275,18 +281,20 @@ const journalingSlice = createSlice({
         tags: [],
         mood: '',
         dateRange: null,
-        readingId: null
+        readingId: null,
+        sortField: 'created_at',
+        sortDirection: false
       };
       state.pagination.page = 0;
     },
-    
+
     // Update pagination
     setPagination: (state, action) => {
       state.pagination = {
         ...state.pagination,
-        ...action.payload
+        ...action.payload,
       };
-    }
+    },
   },
 
   extraReducers: (builder) => {
@@ -309,14 +317,14 @@ const journalingSlice = createSlice({
           content: '',
           mood: '',
           tags: [],
-          readingId: null
+          readingId: null,
         };
       })
       .addCase(createJournal.rejected, (state, action) => {
         state.isCreating = false;
         state.error = action.payload || 'Failed to create journal entry';
       })
-      
+
       // Update journal entry
       .addCase(updateJournal.pending, (state) => {
         state.isUpdating = true;
@@ -324,15 +332,20 @@ const journalingSlice = createSlice({
       })
       .addCase(updateJournal.fulfilled, (state, action) => {
         state.isUpdating = false;
-        
+
         // Update entry in the list if it exists
-        const index = state.entries.findIndex(entry => entry.id === action.payload.id);
+        const index = state.entries.findIndex(
+          (entry) => entry.id === action.payload.id
+        );
         if (index !== -1) {
           state.entries[index] = action.payload;
         }
-        
+
         // Update current journal if it's the one being edited
-        if (state.currentJournal && state.currentJournal.id === action.payload.id) {
+        if (
+          state.currentJournal &&
+          state.currentJournal.id === action.payload.id
+        ) {
           state.currentJournal = action.payload;
         }
       })
@@ -340,7 +353,7 @@ const journalingSlice = createSlice({
         state.isUpdating = false;
         state.error = action.payload || 'Failed to update journal entry';
       })
-      
+
       // Fetch single journal entry
       .addCase(fetchJournal.pending, (state) => {
         state.isFetching = true;
@@ -349,21 +362,21 @@ const journalingSlice = createSlice({
       .addCase(fetchJournal.fulfilled, (state, action) => {
         state.isFetching = false;
         state.currentJournal = action.payload;
-        
+
         // Prepopulate form with journal data
         state.formData = {
           title: action.payload.title,
           content: action.payload.content,
           mood: action.payload.mood || '',
           tags: action.payload.tags || [],
-          readingId: action.payload.reading_id
+          readingId: action.payload.reading_id,
         };
       })
       .addCase(fetchJournal.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload || 'Failed to fetch journal entry';
       })
-      
+
       // Fetch journal entries
       .addCase(fetchJournals.pending, (state) => {
         state.isFetching = true;
@@ -378,7 +391,7 @@ const journalingSlice = createSlice({
         state.isFetching = false;
         state.error = action.payload || 'Failed to fetch journal entries';
       })
-      
+
       // Delete journal entry
       .addCase(deleteJournalEntry.pending, (state) => {
         state.isDeleting = true;
@@ -386,20 +399,25 @@ const journalingSlice = createSlice({
       })
       .addCase(deleteJournalEntry.fulfilled, (state, action) => {
         state.isDeleting = false;
-        
+
         // Remove entry from list
-        state.entries = state.entries.filter(entry => entry.id !== action.payload);
+        state.entries = state.entries.filter(
+          (entry) => entry.id !== action.payload
+        );
         state.totalEntries--;
-        
+
         // Clear current journal if it's the one being deleted
-        if (state.currentJournal && state.currentJournal.id === action.payload) {
+        if (
+          state.currentJournal &&
+          state.currentJournal.id === action.payload
+        ) {
           state.currentJournal = null;
           state.formData = {
             title: '',
             content: '',
             mood: '',
             tags: [],
-            readingId: null
+            readingId: null,
           };
         }
       })
@@ -407,7 +425,7 @@ const journalingSlice = createSlice({
         state.isDeleting = false;
         state.error = action.payload || 'Failed to delete journal entry';
       })
-      
+
       // Fetch tags
       .addCase(fetchTags.pending, (state) => {
         state.isLoadingTags = true;
@@ -421,25 +439,27 @@ const journalingSlice = createSlice({
         state.isLoadingTags = false;
         state.error = action.payload || 'Failed to fetch tags';
       })
-      
+
       // Add tag
       .addCase(addTag.fulfilled, (state, action) => {
         // Add tag to list if it doesn't exist
-        if (!state.tags.find(tag => tag.id === action.payload.id)) {
+        if (!state.tags.find((tag) => tag.id === action.payload.id)) {
           state.tags.push(action.payload);
           // Sort tags alphabetically
           state.tags.sort((a, b) => a.name.localeCompare(b.name));
         }
       })
-      
+
       // Remove tag
       .addCase(removeTag.fulfilled, (state, action) => {
         // Remove tag from list
-        state.tags = state.tags.filter(tag => tag.id !== action.payload);
-        
+        state.tags = state.tags.filter((tag) => tag.id !== action.payload);
+
         // Remove tag from filter if it's being used
         if (state.filters.tags.includes(action.payload)) {
-          state.filters.tags = state.filters.tags.filter(id => id !== action.payload);
+          state.filters.tags = state.filters.tags.filter(
+            (id) => id !== action.payload
+          );
         }
       });
   },
@@ -452,7 +472,7 @@ export const {
   setCurrentJournal,
   updateFilters,
   clearFilters,
-  setPagination
+  setPagination,
 } = journalingSlice.actions;
 
 // Export selectors

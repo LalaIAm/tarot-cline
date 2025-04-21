@@ -3,10 +3,18 @@
 ## Current Focus
 The project has completed both Milestone 1 and Milestone 2 implementation phases. With Milestone 1, we successfully implemented authentication with Supabase, responsive navigation, landing page, and dashboard placeholder. With Milestone 2, we've implemented the complete Tarot Reading Module and AI Interpretation Engine.
 
-We have made significant progress on Milestone 3, having completed Phase 1 (Database Setup), Phase 2 (Service Layer), and Phase 3 (Journal Entry Core). We've created the database schema for journals, journal tags, and tag mappings with appropriate Row-Level Security policies, extended the Supabase service layer with comprehensive journal and tag management functions, implemented the Redux state management for the journaling feature, and added rich text editing and enhanced mood selection for journal entries. We are now ready to proceed with Phase 4 (Journal Management) to continue improving the journaling functionality.
+We have made significant progress on Milestone 3, having completed Phase 1 (Database Setup), Phase 2 (Service Layer), Phase 3 (Journal Entry Core), and Phase 4 (Journal Management). We've created the database schema for journals, journal tags, and tag mappings with appropriate Row-Level Security policies, extended the Supabase service layer with comprehensive journal and tag management functions, implemented the Redux state management for the journaling feature, and added rich text editing, enhanced mood selection, and advanced filtering and search for journal entries. We are now ready to proceed with Phase 5 (Dashboard Integration) to continue improving the journaling functionality.
 
 ## Recent Changes
-- Completed Milestone 3 Phase 3 (Journal Entry Core):
+- Completed Milestone 3 Phase 4 (Journal Management):
+  - Enhanced journal filtering with tag, mood, date range, and reading association filters
+  - Implemented advanced search functionality with multi-term search support
+  - Added sorting capabilities (by date created, date updated, and title)
+  - Improved filter UI with clear visual feedback on active filters
+  - Enhanced database queries to efficiently support filtering and sorting
+  - Updated UI to display filtered results with context
+
+- Previously completed Milestone 3 Phase 3 (Journal Entry Core):
   - Implemented TipTap rich text editor with formatting toolbar for journal entries
   - Created visual mood selector with emoji support and color-coding
   - Enhanced journal entry display to properly render rich text content
@@ -50,8 +58,7 @@ We have made significant progress on Milestone 3, having completed Phase 1 (Data
 
 ## Next Steps
 1. **Continue implementing Milestone 3**
-   - **Phase 4** (Current): Create journal management with filtering and search
-   - **Phase 5**: Enhance dashboard with journal widgets
+   - **Phase 5** (Next): Enhance dashboard with journal widgets
    - **Phase 6**: Establish reading-journal connection
    - **Phase 7**: Test and refine all components
 

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 
 // Helper functions for mood display
 const getMoodEmoji = (mood) => {
@@ -38,6 +39,22 @@ const JournalEntryList = ({
   totalPages,
   onPageChange
 }) => {
+  // Get search filters to highlight search terms in results
+  const { filters, totalEntries } = useSelector(state => ({
+    filters: state.journaling.filters,
+    totalEntries: state.journaling.totalEntries
+  }));
+  
+  // Check if any filters are active
+  const hasActiveFilters = useMemo(() => {
+    return !!(
+      filters.search || 
+      (filters.tags && filters.tags.length > 0) || 
+      filters.mood || 
+      (filters.dateRange && (filters.dateRange.startDate || filters.dateRange.endDate)) ||
+      filters.readingId
+    );
+  }, [filters]);
   // Handle rendering based on loading state and data availability
   if (isLoading) {
     return (
@@ -84,6 +101,35 @@ const JournalEntryList = ({
 
   return (
     <div>
+      {/* Filter summary - show when filters are active */}
+      {hasActiveFilters && (
+        <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-semibold text-blue-800">Search Results</h3>
+              <p className="text-blue-700 text-sm mt-1">
+                Found {totalEntries} {totalEntries === 1 ? 'entry' : 'entries'}
+                {filters.search && <span> containing "<strong>{filters.search}</strong>"</span>}
+                {filters.tags && filters.tags.length > 0 && <span> with selected tags</span>}
+                {filters.mood && <span> with mood <strong>{filters.mood}</strong></span>}
+                {filters.dateRange && filters.dateRange.startDate && <span> from <strong>{filters.dateRange.startDate}</strong></span>}
+                {filters.dateRange && filters.dateRange.endDate && <span> to <strong>{filters.dateRange.endDate}</strong></span>}
+                {filters.readingId === 'has_reading' && <span> with an associated reading</span>}
+                {filters.readingId === 'no_reading' && <span> without any associated reading</span>}
+              </p>
+            </div>
+            <div className="text-sm">
+              <span className="text-blue-700">
+                Sorted by: <strong>
+                  {filters.sortField === 'created_at' ? 'Date Created' : 
+                   filters.sortField === 'updated_at' ? 'Date Updated' : 'Title'}
+                </strong> ({filters.sortDirection ? 'Oldest First' : 'Newest First'})
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {entries.map(entry => (
           <Link 

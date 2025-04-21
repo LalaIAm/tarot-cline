@@ -18,6 +18,8 @@ const JournalFilters = ({ onClearFilters }) => {
   const [startDate, setStartDate] = useState(filters.dateRange?.startDate || '');
   const [endDate, setEndDate] = useState(filters.dateRange?.endDate || '');
   const [readingId, setReadingId] = useState(filters.readingId || '');
+  const [sortField, setSortField] = useState(filters.sortField || 'created_at');
+  const [sortDirection, setSortDirection] = useState(filters.sortDirection);
 
   // Load tags on component mount if they haven't been loaded yet
   useEffect(() => {
@@ -214,6 +216,61 @@ const JournalFilters = ({ onClearFilters }) => {
             <option value="no_reading">No Reading</option>
             {/* Reading-specific options would be dynamically generated here in the future */}
           </select>
+        </div>
+
+        {/* Sort field */}
+        <div className="mb-4">
+          <label htmlFor="sortField" className="block text-sm font-medium text-gray-700 mb-1">
+            Sort By
+          </label>
+          <select
+            id="sortField"
+            value={sortField}
+            onChange={(e) => {
+              setSortField(e.target.value);
+              dispatch(updateFilters({ sortField: e.target.value }));
+            }}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+          >
+            <option value="created_at">Date Created</option>
+            <option value="updated_at">Date Updated</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
+
+        {/* Sort direction */}
+        <div className="mb-4">
+          <label htmlFor="sortDirection" className="block text-sm font-medium text-gray-700 mb-1">
+            Sort Direction
+          </label>
+          <div className="flex items-center space-x-4 mt-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name="sortDirection"
+                checked={!sortDirection}
+                onChange={() => {
+                  setSortDirection(false);
+                  dispatch(updateFilters({ sortDirection: false }));
+                }}
+                className="form-radio h-4 w-4 text-primary"
+              />
+              <span className="ml-2 text-gray-700">Newest First</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name="sortDirection"
+                checked={sortDirection === true}
+                onChange={() => {
+                  setSortDirection(true);
+                  dispatch(updateFilters({ sortDirection: true }));
+                }}
+                className="form-radio h-4 w-4 text-primary"
+              />
+              <span className="ml-2 text-gray-700">Oldest First</span>
+            </label>
+          </div>
         </div>
       </div>
 

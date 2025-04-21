@@ -320,13 +320,40 @@ export const getUserJournals = async (limit = 10, page = 0, filters = {}) => {
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) throw new Error('User not authenticated');
     
-    let query = supabase
-      .from('journals')
-      .select('*', { count: 'exact' })
-      .eq('user_id', user.user.id);
+    let hasTags = filters.tags && filters.tags.length > 0;
     
-    // Apply filters if provided
-    if (filters.readingId) {
+    // Determine if we need to join with tag mappings
+    let query;
+    
+    if (hasTags) {
+      // When filtering by tags, we need to use a more complex query
+      // First, get journals that match tag filters
+      query = supabase
+        .from('journals')
+        .select(`
+          *,
+          journal_tag_mappings!inner(tag_id)
+        `, { count: 'exact' })
+        .eq('user_id', user.user.id);
+      
+      // Filter by tags - ensure journal has ALL selected tags (AND logic)
+      filters.tags.forEach(tagId => {
+        query = query.or(`journal_tag_mappings.tag_id.eq.${tagId}`);
+      });
+    } else {
+      // Simple query without tag filtering
+      query = supabase
+        .from('journals')
+        .select('*', { count: 'exact' })
+        .eq('user_id', user.user.id);
+    }
+    
+    // Apply other filters
+    if (filters.readingId === 'has_reading') {
+      query = query.not('reading_id', 'is', null);
+    } else if (filters.readingId === 'no_reading') {
+      query = query.is('reading_id', null);
+    } else if (filters.readingId) {
       query = query.eq('reading_id', filters.readingId);
     }
     
@@ -334,21 +361,33 @@ export const getUserJournals = async (limit = 10, page = 0, filters = {}) => {
       query = query.eq('mood', filters.mood);
     }
     
-    if (filters.startDate) {
-      query = query.gte('created_at', filters.startDate);
+    if (filters.dateRange && filters.dateRange.startDate) {
+      query = query.gte('created_at', filters.dateRange.startDate);
     }
     
-    if (filters.endDate) {
-      query = query.lte('created_at', filters.endDate);
+    if (filters.dateRange && filters.dateRange.endDate) {
+      query = query.lte('created_at', filters.dateRange.endDate);
     }
     
-    if (filters.search) {
-      query = query.or(`title.ilike.%${filters.search}%,content.ilike.%${filters.search}%`);
+    if (filters.search && filters.search.trim()) {
+      // Enhanced search to handle partial word matches and improve relevance
+      const searchTerms = filters.search.trim().split(/\s+/);
+      
+      // Build OR conditions for each search term
+      const searchConditions = searchTerms.map(term => {
+        return `or(title.ilike.%${term}%,content.ilike.%${term}%)`
+      }).join(',');
+      
+      query = query.or(searchConditions);
     }
     
-    // Apply pagination and ordering
+    // Apply sorting and pagination
+    // Default to newest first
+    const sortField = filters.sortField || 'created_at';
+    const sortDirection = filters.sortDirection || false; // false = descending
+    
     const { data, error, count } = await query
-      .order('created_at', { ascending: false })
+      .order(sortField, { ascending: sortDirection })
       .range(page * limit, (page + 1) * limit - 1);
 
     if (error) throw error;
