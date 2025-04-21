@@ -300,7 +300,7 @@ const ReadingInterpretation = ({
           </button>
           
           <Link
-            to="/journal/new"
+            to={`/journal/new?readingId=${interpretation.id}`}
             className="px-6 py-3 bg-midnight hover:bg-midnight/70 text-white rounded-md transition-colors"
           >
             Journal About This Reading

@@ -1,0 +1,34 @@
+{
+  "sampleJournal": {
+    "title": "Test Journal Entry",
+    "content": "<p>This is a test journal entry with <strong>rich text</strong> formatting.</p>",
+    "mood": "happy",
+    "tags": ["test", "cypress", "journaling"]
+  },
+  "journalWithReading": {
+    "title": "Reflections on My Reading",
+    "content": "<p>The tarot reading gave me insight into my future path.</p>",
+    "mood": "reflective",
+    "tags": ["spiritual", "tarot"]
+  },
+  "filteredJournals": [
+    {
+      "title": "Morning Reflections",
+      "content": "<p>Today I'm feeling optimistic about new opportunities.</p>",
+      "mood": "optimistic",
+      "tags": ["morning", "opportunities"]
+    },
+    {
+      "title": "Evening Thoughts",
+      "content": "<p>Reflecting on the day's events and lessons learned.</p>",
+      "mood": "peaceful",
+      "tags": ["evening", "reflection"]
+    },
+    {
+      "title": "Work Progress Notes",
+      "content": "<p>Made significant progress on the project today.</p>",
+      "mood": "accomplished",
+      "tags": ["work", "progress"]
+    }
+  ]
+}

@@ -207,6 +207,19 @@ The project is built using Vite as the build tool. Primary dependencies include:
 - Protected routes with authentication checks
 - Redux integration for auth state management
 
+### Tarot Reading
+- Complete tarot reading flow with user intent, spread selection, and card drawing
+- Interactive card shuffling and spread visualization
+- AI-powered interpretation service
+- Reading history with filtering and pagination
+- Reading storage with Supabase database integration
+
+### Journaling (Phase 1 Complete)
+- Database schema design with tables for journals, tags, and mappings
+- Row-Level Security policies for data protection
+- Comprehensive service layer for journal and tag management
+- Redux state management with actions, reducers, and selectors
+
 ### UI Components
 - Responsive navigation with mobile menu
 - Footer component with social links
