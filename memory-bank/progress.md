@@ -28,7 +28,7 @@
 
 ## What's In Progress
 
-- 🔄 Implementing Milestone 3 (Journaling Feature) - Phase 6
+- 🔄 Implementing Milestone 3 (Journaling Feature) - Phase 7 (Testing & Refinement)
 
 ## What's Left To Build
 
@@ -39,7 +39,7 @@
    - [x] Visual mood selection with emoji support (Phase 3)
    - [x] Advanced journal filtering and search functionality (Phase 4)
    - [x] Dashboard integration with readings and journal entries (Phase 5)
-   - [ ] Reading-journal connection flow (Phase 6)
+   - [x] Reading-journal connection flow (Phase 6)
 
 2. **Milestone 4: Account Management and Security Enhancements**
 
@@ -57,7 +57,7 @@
 
 ## Current Status
 
-We have made substantial progress on Milestone 3. Phases 1 (Database Setup), 2 (Service Layer), and 3 (Journal Entry Core) have been successfully completed. 
+We have made substantial progress on Milestone 3. Phases 1 (Database Setup), 2 (Service Layer), 3 (Journal Entry Core), 4 (Journal Management), 5 (Dashboard Integration), and 6 (Reading-Journal Connection) have been successfully completed.
 
 The application now has:
 - Database tables for journal entries, tags, and tag mappings with appropriate Row-Level Security policies
@@ -68,7 +68,15 @@ The application now has:
 - Enhanced journal entry display components that properly render rich text
 - Updated list views that properly handle HTML content in previews
 
-We have created a solid foundation for the journaling feature, which now has a fully functional entry creation form with rich text and mood selection capabilities. We are now preparing to work on Phase 4 (Journal Management) to implement more sophisticated filtering and search functionality.
+We have created a solid foundation for the journaling feature, which now has:
+- A fully functional entry creation form with rich text and mood selection capabilities
+- Advanced filtering and search functionality for journal entries
+- Dashboard integration with activity statistics and quick action buttons
+- A complete reading-journal connection flow with visual indicators
+- The ability to create journal entries directly from tarot readings
+- Rich previews of linked tarot readings within journal entries
+
+All the core functionality is now in place, and we are preparing to work on Phase 7 (Testing & Refinement) to ensure all components work well together and provide a smooth user experience.
 
 Milestone 2 was previously completed with a fully functional tarot reading feature, including tarot card database, deck management, spread selection, shuffle animation, and an AI interpretation system.
 
@@ -137,6 +145,14 @@ Milestone 2 was previously completed with a fully functional tarot reading featu
 - ✅ Documented user flows and success criteria
 
 ## Milestone 3 Implementation (In Progress)
+
+### Reading-Journal Connection (Phase 6) - Completed
+- ✅ Created flow to journal from a reading with URL parameter passing
+- ✅ Enhanced JournalEntryForm to fetch and display actual readings
+- ✅ Updated JournalEntryDetail to show associated reading cards with previews
+- ✅ Added visual indicators for linked entries in lists and dashboard
+- ✅ Created a test page for verifying reading-journal connections
+- ✅ Fixed all routing for proper navigation between readings and journals
 
 ### Journal Entry Core (Phase 3) - Completed
 - ✅ Implemented TipTap rich text editor component with formatting toolbar

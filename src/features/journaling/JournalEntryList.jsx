@@ -153,8 +153,20 @@ const JournalEntryList = ({
               </div>
               
               <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                <div className="text-sm text-gray-500">
-                  {formatDate(entry.created_at)}
+                <div className="flex items-center gap-2">
+                  <div className="text-sm text-gray-500">
+                    {formatDate(entry.created_at)}
+                  </div>
+                  
+                  {/* Reading indicator */}
+                  {entry.reading_id && (
+                    <span className="inline-flex items-center rounded-full px-2 py-1 text-xs bg-purple-100 text-purple-800" title="Linked to Tarot Reading">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3a1 1 0 00-1 1v2a1 1 0 002 0V4a1 1 0 00-1-1zm0 10a1 1 0 001 1h5a1 1 0 001-1v-5a1 1 0 00-1-1h-5a1 1 0 00-1 1v5zm-7-3a1 1 0 011-1h2a1 1 0 010 2H4a1 1 0 01-1-1zm8-6a1 1 0 100 2 1 1 0 000-2z" />
+                      </svg>
+                      Reading
+                    </span>
+                  )}
                 </div>
                 
                 {entry.tags && entry.tags.length > 0 && (

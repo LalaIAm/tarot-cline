@@ -88,6 +88,19 @@ const JournalingPage = () => {
         totalPages={Math.ceil(totalEntries / pagination.limit)}
         onPageChange={handlePageChange}
       />
+      
+      {/* Development/testing tools - can be removed for production */}
+      <div className="mt-16 pt-6 border-t border-gray-200 text-center">
+        <div className="inline-block px-4 py-2 bg-gray-100 rounded-lg text-sm">
+          <span className="text-gray-500 mr-2">Developer Tools:</span>
+          <Link 
+            to="/journal/connection-test" 
+            className="text-blue-500 hover:underline"
+          >
+            Reading-Journal Connection Test
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

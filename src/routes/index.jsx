@@ -19,6 +19,7 @@ import ReadingInterpretation from '../features/tarotReading/ReadingInterpretatio
 import JournalingPage from '../features/journaling/JournalingPage';
 import JournalEntryForm from '../features/journaling/JournalEntryForm';
 import JournalEntryDetail from '../features/journaling/JournalEntryDetail';
+import ReadingJournalConnectionTest from '../features/journaling/ReadingJournalConnectionTest';
 
 // Create router
 export const router = createBrowserRouter([
@@ -96,6 +97,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <JournalEntryForm />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'journal/connection-test',
+        element: (
+          <ProtectedRoute>
+            <ReadingJournalConnectionTest />
           </ProtectedRoute>
         ),
       },

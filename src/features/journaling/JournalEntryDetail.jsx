@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchJournal, deleteJournalEntry, selectCurrentJournal, selectIsFetching, selectIsDeleting, selectError } from './journalingSlice';
 import { format } from 'date-fns';
+import { getReadingById } from '../../services/supabaseService';
 
 // Helper functions for mood display
 const getMoodEmoji = (mood) => {
@@ -31,6 +32,99 @@ const getMoodStyles = (mood) => {
     case 'Grateful': return 'bg-green-100 text-green-800';
     default: return 'bg-gray-100 text-gray-800';
   }
+};
+
+// Component to display linked reading preview
+const LinkedReadingPreview = ({ readingId }) => {
+  const [reading, setReading] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    const fetchReading = async () => {
+      try {
+        const { reading, error } = await getReadingById(readingId);
+        if (error) throw error;
+        setReading(reading);
+      } catch (err) {
+        console.error('Error fetching reading:', err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    if (readingId) {
+      fetchReading();
+    }
+  }, [readingId]);
+  
+  if (isLoading) {
+    return (
+      <div className="bg-purple-100 border border-purple-300 rounded-lg p-4 mt-6 animate-pulse">
+        <div className="h-4 bg-purple-200 rounded w-1/4 mb-2"></div>
+        <div className="h-4 bg-purple-200 rounded w-1/2 mb-2"></div>
+        <div className="flex gap-2 mt-3">
+          <div className="h-16 w-10 bg-purple-200 rounded"></div>
+          <div className="h-16 w-10 bg-purple-200 rounded"></div>
+          <div className="h-16 w-10 bg-purple-200 rounded"></div>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="bg-red-100 border border-red-300 rounded-lg p-4 mt-6">
+        <p className="text-red-700">Error loading reading: {error}</p>
+      </div>
+    );
+  }
+  
+  if (!reading) {
+    return (
+      <div className="bg-purple-100 border border-purple-300 rounded-lg p-4 mt-6">
+        <p className="text-purple-700">Reading not found or has been deleted.</p>
+      </div>
+    );
+  }
+  
+  // Determine how many cards to display in the preview (up to 3)
+  const previewCards = reading.reading_data?.slice(0, 3) || [];
+  
+  return (
+    <div className="bg-purple-100 border border-purple-300 rounded-lg p-4 mt-6">
+      <h3 className="text-lg font-semibold text-purple-900 mb-2">Linked Reading: {reading.spread_type}</h3>
+      <p className="text-purple-800 italic mb-3">"{reading.question}"</p>
+      
+      {/* Preview of card images */}
+      <div className="flex flex-wrap gap-3 mb-3">
+        {previewCards.map((card, index) => (
+          <div key={`${card.name}-${index}`} className="relative">
+            <img 
+              src={card.img} 
+              alt={card.name}
+              className={`w-16 h-24 object-cover rounded-md shadow ${
+                card.orientation === 'reversed' ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+        ))}
+        {reading.reading_data?.length > 3 && (
+          <div className="flex items-center justify-center w-16 h-24 bg-purple-200 rounded-md">
+            <span className="text-purple-800 font-medium">+{reading.reading_data.length - 3}</span>
+          </div>
+        )}
+      </div>
+      
+      <Link 
+        to={`/tarot/reading/${reading.id}`} 
+        className="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition"
+      >
+        View Full Reading
+      </Link>
+    </div>
+  );
 };
 
 const JournalEntryDetail = () => {
@@ -157,7 +251,7 @@ const JournalEntryDetail = () => {
             {journal.reading_id && (
               <div>
                 <span className="font-semibold">Linked Reading:</span>{' '}
-                <Link to={`/readings/${journal.reading_id}`} className="text-primary hover:underline">
+                <Link to={`/tarot/reading/${journal.reading_id}`} className="text-primary hover:underline">
                   View Reading
                 </Link>
               </div>
@@ -184,6 +278,11 @@ const JournalEntryDetail = () => {
           className="prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: journal.content }} 
         />
+        
+        {/* Display linked reading preview if available */}
+        {journal.reading_id && (
+          <LinkedReadingPreview readingId={journal.reading_id} />
+        )}
         
         {/* Back link */}
         <div className="mt-8 pt-4 border-t border-gray-200">

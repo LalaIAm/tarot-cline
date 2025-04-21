@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { 
   createJournal, 
   updateJournal, 
@@ -14,6 +14,7 @@ import {
   selectIsFetching,
   selectError
 } from './journalingSlice';
+import { getUserReadings } from '../../services/supabaseService';
 import JournalTagInput from './JournalTagInput';
 import RichTextEditor from './RichTextEditor';
 import MoodSelector from './MoodSelector';
@@ -21,7 +22,14 @@ import MoodSelector from './MoodSelector';
 const JournalEntryForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams(); // For editing existing entries
+  const [readings, setReadings] = useState([]);
+  const [isLoadingReadings, setIsLoadingReadings] = useState(false);
+  
+  // Get readingId from query parameters if present
+  const queryParams = new URLSearchParams(location.search);
+  const readingIdFromUrl = queryParams.get('readingId');
   
   const formData = useSelector(selectFormData);
   const currentJournal = useSelector(selectCurrentJournal);
@@ -39,13 +47,36 @@ const JournalEntryForm = () => {
       dispatch(fetchJournal(id));
     } else {
       dispatch(resetForm());
+      
+      // If readingId is in the URL, update the form
+      if (readingIdFromUrl) {
+        dispatch(updateFormData({ readingId: readingIdFromUrl }));
+      }
     }
     
     // Clean up when leaving the form
     return () => {
       dispatch(resetForm());
     };
-  }, [dispatch, id, isEditing]);
+  }, [dispatch, id, isEditing, readingIdFromUrl]);
+  
+  // Fetch user's readings for the dropdown
+  useEffect(() => {
+    const fetchReadings = async () => {
+      setIsLoadingReadings(true);
+      try {
+        const { readings, error } = await getUserReadings(50, 0); // Get up to 50 readings
+        if (error) throw error;
+        setReadings(readings || []);
+      } catch (error) {
+        console.error('Error fetching readings:', error);
+      } finally {
+        setIsLoadingReadings(false);
+      }
+    };
+    
+    fetchReadings();
+  }, []);
   
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -115,12 +146,13 @@ const JournalEntryForm = () => {
     dispatch(updateFormData({ mood }));
   };
   
-  // Mock reading options - in a real implementation, you would fetch the user's readings
+  // Format readings for dropdown options
   const readingOptions = [
     { value: '', label: 'No Associated Reading' },
-    { value: 'mock-reading-1', label: 'Celtic Cross Reading (April 18, 2025)' },
-    { value: 'mock-reading-2', label: 'Three Card Spread (April 15, 2025)' },
-    // In a real implementation, these would be actual reading IDs and labels
+    ...readings.map(reading => ({
+      value: reading.id,
+      label: `${reading.spread_type} Reading (${new Date(reading.created_at).toLocaleDateString()}) - "${reading.question.substring(0, 30)}${reading.question.length > 30 ? '...' : ''}"`
+    }))
   ];
   
   return (
@@ -187,19 +219,26 @@ const JournalEntryForm = () => {
             <label htmlFor="readingId" className="block text-sm font-medium text-gray-700 mb-1">
               Associated Reading
             </label>
-            <select
-              id="readingId"
-              name="readingId"
-              value={formData.readingId || ''}
-              onChange={handleReadingChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-            >
-              {readingOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            {isLoadingReadings ? (
+              <div className="flex items-center space-x-2 h-10">
+                <div className="animate-spin h-5 w-5 border-2 border-primary border-t-transparent rounded-full"></div>
+                <span className="text-gray-500">Loading readings...</span>
+              </div>
+            ) : (
+              <select
+                id="readingId"
+                name="readingId"
+                value={formData.readingId || ''}
+                onChange={handleReadingChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              >
+                {readingOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            )}
             <p className="mt-1 text-sm text-gray-500">
               Optionally link this journal to a tarot reading
             </p>
