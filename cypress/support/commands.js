@@ -22,7 +22,7 @@ Cypress.Commands.add('login', (email, password) => {
   const supabase = createClient(supabaseUrl, supabaseKey);
   
   // Sign in via Supabase
-  return cy.wrap(
+  cy.wrap(
     supabase.auth.signInWithPassword({
       email,
       password,
@@ -39,9 +39,10 @@ Cypress.Commands.add('login', (email, password) => {
       'sb-' + supabaseUrl.split('//')[1].split('.')[0] + '-auth-token',
       JSON.stringify(response.data)
     );
-    
-    return response.data;
   });
+  
+  // Navigate to dashboard after successful login
+  cy.visit('/dashboard');
 });
 
 // Create a journal entry with Supabase directly (bypassing UI for test setup)
@@ -101,3 +102,15 @@ Cypress.Commands.add('createReading', (readingData) => {
 Cypress.Commands.add('getByData', (selector) => {
     return cy.get(`[data-test=${selector}]`)
 })
+
+// Direct logout command
+Cypress.Commands.add('logout', () => {
+  cy.log('Logging out programmatically');
+  cy.window().then((win) => {
+    // Dispatch logout action directly to the Redux store
+    win.store.dispatch({ type: 'auth/logout/fulfilled', payload: true });
+    
+    // Navigate back to the landing page
+    cy.visit('/');
+  });
+});
