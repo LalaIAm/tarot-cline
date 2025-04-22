@@ -5,16 +5,17 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
+  projectId: '6x8p9z',
   e2e: {
     baseUrl: 'http://localhost:5173', // Vite's default dev server URL
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      
+
       // Add environment variables from .env file to Cypress config
       config.env = config.env || {};
       config.env.SUPABASE_URL = process.env.VITE_SUPABASE_URL;
       config.env.SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
-      
+
       return config;
     },
     // Disable Web Security to allow Cypress to manipulate localStorage for auth
@@ -25,7 +26,7 @@ export default defineConfig({
     // Configure default command timeout (10s)
     defaultCommandTimeout: 10000,
     // Configure wait time for page load
-    pageLoadTimeout: 90000
+    pageLoadTimeout: 90000,
   },
   // Configure test videos
   video: false,
