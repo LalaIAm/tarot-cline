@@ -81,7 +81,7 @@ describe('Authentication', () => {
     cy.getByData('forgot-password-link').click();
 
     // Verify we're on the password reset page
-    cy.url().should('include', '/password-reset');
+    cy.url().should('include', '/reset-password');
   });
 
   it('should logout successfully', () => {

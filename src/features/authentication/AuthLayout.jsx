@@ -22,6 +22,7 @@ const AuthLayout = ({ children, title, subtitle, authType }) => {
               <p>
                 Don't have an account?{' '}
                 <Link 
+                  data-test='signup-link'
                   to="/auth/signup" 
                   className="font-medium text-purple-600 hover:text-purple-500"
                 >
@@ -30,6 +31,7 @@ const AuthLayout = ({ children, title, subtitle, authType }) => {
               </p>
               <p>
                 <Link 
+                  data-test='forgot-password-link'
                   to="/auth/reset-password" 
                   className="font-medium text-purple-600 hover:text-purple-500"
                 >
@@ -40,7 +42,8 @@ const AuthLayout = ({ children, title, subtitle, authType }) => {
           ) : authType === 'signup' ? (
             <p>
               Already have an account?{' '}
-              <Link 
+                <Link 
+                  data-test='login-link'
                 to="/auth/login" 
                 className="font-medium text-purple-600 hover:text-purple-500"
               >
