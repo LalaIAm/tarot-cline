@@ -11,7 +11,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "cypress run",
-    "start": "npm preview",
+    "start": "npm run preview",
     "cy:run": "cypress run",
     "test:ci": "start-server-and-test start http://localhost:5173 cy:run",
     "test:journaling": "cypress run --spec \"cypress/e2e/journaling/**/*.cy.js\"",
