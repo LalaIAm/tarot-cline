@@ -27,6 +27,7 @@ export default defineConfig({
     defaultCommandTimeout: 10000,
     // Configure wait time for page load
     pageLoadTimeout: 90000,
+    experimentalStudio: true
   },
   // Configure test videos
   video: false,
