@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import { MoonIcon, SunIcon, MenuIcon } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <header className='py-4 border-b bg-background/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50'>
@@ -41,10 +44,21 @@ const Header = () => {
           </Link>
         </nav>
         <div className='hidden md:flex items-center gap-4'>
-          <Button variant='outline' size='sm' data-test='log-in'>
+          <Button
+            onClick={() => navigate('/auth/login')}
+            variant='outline'
+            size='sm'
+            data-test='log-in'
+          >
             Log In
           </Button>
-          <Button size='sm' data-test='sign-up'>Sign Up</Button>
+          <Button
+            size='sm'
+            onClick={() => navigate('/auth/signup')}
+            data-test='sign-up'
+          >
+            Sign Up
+          </Button>
         </div>
         <button
           className='md:hidden p-2'

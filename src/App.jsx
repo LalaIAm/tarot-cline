@@ -2,6 +2,11 @@ import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { store } from './app/store';
+
+// Expose store when in development or testing environment
+if (import.meta.env.DEV || import.meta.env.MODE === 'test') {
+  window.store = store;
+}
 import { router } from './routes/index';
 import { setUser } from './features/authentication/authSlice';
 import { setupAuthListener } from './services/supabaseService';

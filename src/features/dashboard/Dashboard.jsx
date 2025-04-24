@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
-import { useSelector } from 'react-redux';
-import { selectUser } from '../authentication/authSlice';
+import {useEffect, useState, useRef} from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, logoutUser } from '../authentication/authSlice';
 import { Link } from 'react-router-dom';
 import { getUserReadings, getUserJournals } from '../../services/supabaseService';
 import RecentReadingsWidget from './RecentReadingsWidget';
@@ -8,7 +8,24 @@ import JournalEntriesWidget from './JournalEntriesWidget';
 import DashboardStatsWidget from './DashboardStatsWidget';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
   const [stats, setStats] = useState({
     totalReadings: 0,
     totalJournals: 0,
@@ -62,6 +79,43 @@ const Dashboard = () => {
             >
               New Journal Entry
             </Link>
+            
+            {/* User Menu */}
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
+                data-test="user-menu"
+              >
+                {user?.user_metadata?.avatar_url ? (
+                  <img 
+                    src={user.user_metadata.avatar_url} 
+                    alt="Profile" 
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-700 text-lg font-semibold">
+                    {(user?.email || 'U')[0].toUpperCase()}
+                  </span>
+                )}
+              </button>
+              
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <button
+                onClick={() => {
+                  dispatch(logoutUser());
+                  setMenuOpen(false);
+                }}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                data-test="logout-button"
+                data-cy="logout-button" /* Adding an additional selector for Cypress */
+              >
+                Logout
+              </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         

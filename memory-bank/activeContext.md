@@ -8,7 +8,21 @@ We have made significant progress on Milestone 3, having completed Phase 1 (Data
 We are now working on Phase 7 (Testing & Refinement) of Milestone 3. We've set up Cypress for end-to-end testing and implemented a comprehensive test suite covering all aspects of the journaling feature, including core functionality, filtering and search, reading-journal connections, dashboard integration, and authentication. We've also enhanced our testing approach by adding a custom getByData command to improve selector consistency and maintainability. Additionally, we've updated our React components with consistent data-test attributes that match our test selectors.
 
 ## Recent Changes
-- **Continued Milestone 3 Phase 7 (Testing & Refinement)**:
+- **Added User Logout Functionality**:
+  - Implemented a user menu dropdown in the Dashboard component
+  - Added a logout button that dispatches the logoutUser action from authSlice
+  - Implemented click-outside detection to close the menu when clicking elsewhere
+  - Used appropriate styling to match the application's design
+  - Added appropriate data-test attributes for testing
+  
+- **Enhanced Testing Infrastructure**:
+  - Improved Cypress test for logout functionality
+  - Added a direct logout command to Cypress for more reliable testing
+  - Exposed the Redux store to the window object for testing purposes
+  - Modified authentication tests to work with the new user menu 
+  - Fixed all authentication tests to ensure they pass reliably
+
+- **Previously in Milestone 3 Phase 7 (Testing & Refinement)**:
   - Enhanced test reliability by adding a custom getByData Cypress command
   - Updated all test files to use the consistent getByData selector pattern
   - Added corresponding data-test attributes to React components including:

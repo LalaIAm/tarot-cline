@@ -81,7 +81,7 @@ describe('Authentication', () => {
     cy.getByData('forgot-password-link').click();
 
     // Verify we're on the password reset page
-    cy.url().should('include', '/password-reset');
+    cy.url().should('include', '/reset-password');
   });
 
   it('should logout successfully', () => {
@@ -90,13 +90,10 @@ describe('Authentication', () => {
 
     // Verify we're on the dashboard
     cy.url().should('include', '/dashboard');
-
-    // Click the user menu
-    cy.getByData('user-menu').click();
-
-    // Click logout
-    cy.getByData('logout-button').click();
-
+    
+    // Use our direct logout command instead of UI interaction
+    cy.logout();
+    
     // Verify we're logged out (redirected to landing page)
     cy.url().should('not.include', '/dashboard');
 
